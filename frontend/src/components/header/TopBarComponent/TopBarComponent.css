@@ -1,0 +1,6 @@
+.topbar {
+    background-image: linear-gradient(rgb(155, 193, 238), rgb(108, 210, 221));
+    padding: 1.5% 3% 1.5%;
+    color: #ffffff;
+    font-size: x-large;
+}
