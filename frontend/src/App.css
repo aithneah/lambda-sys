@@ -9,4 +9,7 @@
 
 html, body {
     height: 100%;
+    overflow: hidden;
+    background-image:  linear-gradient(rgba(155, 193, 238, 0.6), rgba(108, 210, 221, 0.6)), url('./assets/background.jpg');
+    background-size: cover;
 }
