@@ -34,6 +34,7 @@ const CommentComponent = (props) => {
             <input className="submit" type="submit" value="Oceń"/>
             </div>
         </form>
+
     </div>;
 };
 

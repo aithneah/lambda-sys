@@ -1,5 +1,5 @@
 import React from 'react';
-import './CircleComponent.css';
+import './CircleComponent.scss';
 import LoginComponent from './LoginComponent/LoginComponent';
 import CommentComponent from './CommentComponent/CommentComponent';
 
@@ -16,7 +16,7 @@ const CircleComponent = (props) => {
             content = <CommentComponent/>;
     }
 
-    return <div className="circleComponent">{content}</div>;
+    return <div className={"circleComponent"}>{content}</div>;
 };
 
 export default CircleComponent;

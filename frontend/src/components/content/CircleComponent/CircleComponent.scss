@@ -1,0 +1,9 @@
+@import '../../../colors';
+
+.circleComponent {
+    background-color: $lightBackground;
+    border-radius: 50vw;
+    padding: 5em;
+    width: 80vh;
+    height: 80vh;
+}
