@@ -1,4 +1,18 @@
-body {
-    background-image:  linear-gradient(rgba(155, 193, 238, 0.6), rgba(108, 210, 221, 0.6)), url('../assets/close-up-color-dew-1089455.jpg');
-    background-size: cover;
+.pageContainer {
+    height: 100vh;
+    width: 100vw;
+}
+
+.pageHeader {
+    height: 15vh;
+    min-height: 15vh;
+}
+
+.pageContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5vh;
+    height: 85vh;
+    max-height: 85vh;
 }

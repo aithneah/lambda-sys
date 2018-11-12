@@ -1,0 +1,71 @@
+.loginComponent {
+
+}
+
+.loginComponentHeader {
+    font-size: xx-large;
+    color: #2EE7C5;
+    border-bottom: 2px solid #2EE7C5;
+    text-align: center;
+}
+
+.loginComponentForm {
+    margin: 5% 0 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginComponentFormElement {
+    margin: 10px 0 5px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.textInput {
+    margin-left: 5px;
+    border-radius: 10px;
+    border: 1px solid #e2e2e2;
+    height: 35px;
+    padding: 3px;
+    font-size: 1em;
+    width: 60%;
+    background-color: #f5f5f5;
+}
+
+.textInput:focus {
+    border-radius: 10px;
+    border: 2px solid #99C2EE;
+    outline: none;
+}
+
+.submit {
+    border-radius: 10px;
+    padding: 10px 15px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 1.2em;
+    background-image: linear-gradient(rgb(155, 193, 238), rgb(108, 210, 221));
+    color: #F6F6F6;
+    border: none;
+}
+
+.submit:hover {
+    box-shadow: 2px 2px 10px 5px #d3d3d3;
+}
+
+.sumbit:focus {
+    outline: none;
+}
+
+.loginComponentAdditionalInfo {
+    border-top: 1px solid #2EE7C5;
+    padding-top: 2%;
+    color: #2EE7C5;
+    text-align: center;
+    cursor: pointer;
+}

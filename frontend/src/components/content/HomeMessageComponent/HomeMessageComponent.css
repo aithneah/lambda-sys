@@ -1,0 +1,24 @@
+.homeContainer {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 250px;
+    padding: 20px;
+    width: 80%;
+    height: 40%;
+}
+
+.homeMessageTitle {
+    font-size: 28px;
+    padding-bottom: 4px;
+    border-bottom: 3px solid #2EE7C5;
+}
+
+.homeMessageContent {
+    padding-top: 5px;
+    font-size: 35px;
+    color: #2EE7C5;
+    text-align: center;
+}

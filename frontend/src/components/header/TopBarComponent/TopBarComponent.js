@@ -1,10 +1,12 @@
 import React from "react";
-import './TopBarComponent.css';
+import ButtonComponent from '../../shared/ButtonComponent/ButtonComponent';
+import './TopBarComponent.scss';
 
 const TopBarComponent = props => {
   return (
       <div className={'topbar'}>
-          paradygmaty programowania
+          <img src={"https://svgshare.com/i/9Ar.svg"} className={'topBarLogoImage'} alt="paradygmaty programowania"/>
+          <ButtonComponent title={props.isLogged ? 'Wyloguj' : 'Zaloguj'} style="buttonWhite" fontsize="3vh"/>
       </div>
   );
 };

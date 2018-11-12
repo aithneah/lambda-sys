@@ -6,7 +6,7 @@ import './HeaderContainer.css';
 class HeaderContainer extends Component {
     render() {
         return (
-            <div className={'header'}>
+            <div className={'headerContainer'}>
                 <TopBarComponent/>
                 <BottomBarComponent/>
             </div>

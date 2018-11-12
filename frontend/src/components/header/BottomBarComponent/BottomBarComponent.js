@@ -1,10 +1,12 @@
 import React from "react";
-import './BottomBarComponent.css';
+import './BottomBarComponent.scss';
 
 const BottomBarComponent = props => {
   return (
       <div className={'bottombar'}>
+          <div className={'bottombarText'}>
           Zaloguj się, aby skorzystać z aplikacji
+          </div>
       </div>
   );
 };
