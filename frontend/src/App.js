@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PageContainer from './components/PageContainer';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/actions';
-import './App.css';
+import './App.scss';
 
 class App extends Component {
 
