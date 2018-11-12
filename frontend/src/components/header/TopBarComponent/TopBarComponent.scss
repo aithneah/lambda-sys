@@ -1,0 +1,15 @@
+@import '../../../colors';
+
+.topbar {
+    background-image: linear-gradient($gradientLight, $gradientMedium);
+    padding: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+}
+
+.topBarLogoImage {
+    width: 400px;
+}

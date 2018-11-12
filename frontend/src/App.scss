@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Muli');
+@import '~antd/dist/antd.css';
+@import './colors';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Muli', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background-image:  linear-gradient($gradientLightRgba, $gradientDarkRgba), url('./assets/background.jpg');
+    background-size: cover;
+}

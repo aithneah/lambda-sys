@@ -1,0 +1,48 @@
+@import '../../../colors';
+
+.buttonContainer {
+    border-radius: 10px;
+    padding: 10px 15px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.buttonIcon {
+    margin-right: 5px;
+}
+
+.buttonText {
+    display: inline-block;
+}
+
+.buttonWhite {
+    background-color: $buttonLight;
+    color: $accentColor;
+}
+
+.buttonBlue {
+    border: 2px solid $buttonNeutral;
+    background-color: $buttonLight;
+    color: $buttonNeutral;
+}
+
+.buttonGreen {
+    border: 2px solid $buttonAccept;
+    background-color: $buttonLight;
+    color: $buttonAccept;
+}
+
+.buttonRed {
+    border: 2px solid $buttonDecline;
+    background-color: $buttonLight;
+    color: $buttonDecline;
+}
+
+.buttonGradient {
+    background-image: linear-gradient($gradientLight, $gradientDark);
+    color: $lightFont;
+}

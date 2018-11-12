@@ -1,0 +1,14 @@
+@import '../../../colors';
+
+.bottombar {
+    background-color: $barsAndSecondBackground;
+    font-size: 2vh;
+    color: $accentColor;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+}
+
+.bottombarText {
+    margin-left: 1vw;
+}

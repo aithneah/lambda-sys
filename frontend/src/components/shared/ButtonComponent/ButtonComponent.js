@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'antd';
-import './ButtonComponent.css';
+import './ButtonComponent.scss';
 
 const ButtonComponent = (props) => {
   return <div className={'buttonContainer' + ' ' + props.style} onClick={props.onClick} style={{fontSize: props.fontsize}}>
