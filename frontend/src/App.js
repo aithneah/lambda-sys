@@ -3,6 +3,7 @@ import PageContainer from './components/PageContainer';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/actions';
 import './App.scss';
+import {withRouter} from "react-router-dom";
 
 class App extends Component {
 
@@ -24,4 +25,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

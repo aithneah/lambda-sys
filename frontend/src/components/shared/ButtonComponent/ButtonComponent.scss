@@ -9,6 +9,7 @@
     align-items: center;
     cursor: pointer;
     width: fit-content;
+    margin: 0 0.5vw 0;
 }
 
 .buttonIcon {
@@ -44,5 +45,10 @@
 
 .buttonGradient {
     background-image: linear-gradient($gradientLight, $gradientDark);
+    color: $lightFont;
+}
+
+.buttonGray {
+    background-image: linear-gradient(to right, $buttonDisabledGradient1, $buttonDisabledGradient2);
     color: $lightFont;
 }

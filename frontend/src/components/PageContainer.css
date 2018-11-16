@@ -13,6 +13,6 @@
     align-items: center;
     justify-content: center;
     padding: 5vh;
-    height: 85vh;
+    overflow: auto;
     max-height: 85vh;
 }

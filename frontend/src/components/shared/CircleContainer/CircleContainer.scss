@@ -1,0 +1,28 @@
+@import '../../../colors';
+
+.circleContainer {
+    background-color: $lightBackground;
+    border-radius: 50vw;
+    padding:10vh;
+    width: 80vh;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.circleContainerHeader {
+    font-size: xx-large;
+    color: $accentColor;
+    border-bottom: 2px solid $accentColor;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.circleContainerFooter {
+    border-top: 1px solid $accentColor;
+    padding-top: 2%;
+    color: $accentColor;
+    text-align: center;
+    cursor: pointer;
+}
