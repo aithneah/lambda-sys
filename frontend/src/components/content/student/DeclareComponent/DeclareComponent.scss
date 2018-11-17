@@ -1,17 +1,18 @@
-@import '../../../colors';
+@import '../../../../colors';
 
 .declareComponentListBlock {
 }
 
 .declareComponentListTitle {
-  margin-top: 1.5vh;
-  border-bottom: 1px solid $tableRowBorder;
+  margin-top: 2vh;
+  border-bottom: 2px solid $accentColor;
   font-size: 3vh;
   font-weight: 900;
   background: linear-gradient(to bottom, $gradientLight 0%, $gradientDark 90%);
   color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: fit-content;
 }
 
 .declareComponentListExercise {
@@ -25,4 +26,11 @@
 
 .declareComponentListLang {
   padding: 2vh 4vw 0;
+}
+
+.declareComponentButtons {
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

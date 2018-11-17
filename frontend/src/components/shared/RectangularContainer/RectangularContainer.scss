@@ -3,7 +3,7 @@
 .rectangularContainer {
   background-color: $lightBackground;
   width: 90vw;
-  min-height: 70vh;
+  min-height: 50vh;
   height: fit-content;
   padding: 3vw;
   border-radius: 50px;
@@ -29,7 +29,7 @@
 
 .rectangularContainerIcon {
   color: $accentColor;
-  font-size: 3.5vh;
+  font-size: 4.5vh;
   margin-right: 1vw;
 }
 

@@ -1,0 +1,49 @@
+@import "../../../../colors";
+
+.studentProgressContainer {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.studentProgressChartPercetageAndAverage {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.studentProgressChart {
+  flex: 1;
+  align-items: stretch;
+  padding: 3vh 0;
+}
+
+.studentProgressPercentageAndAverage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.studentProgressPercentage {
+  flex: 1;
+  padding: 3vh 0;
+}
+
+.studentProgressAverage {
+  flex: 1;
+  padding: 3vh;
+
+}
+
+.studentProgressDeclarations {
+
+}
+
+.studentProgressSectionTitle {
+  font-size: 2.5vh;
+  font-weight: 900;
+  border-bottom: 1px solid $accentColor;
+  width: fit-content;
+  margin: auto;
+}

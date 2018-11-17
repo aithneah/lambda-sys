@@ -1,0 +1,36 @@
+@import "../../../colors";
+
+.exerciseTileContainer {
+  margin: auto;
+  height: 5.5vh;
+  width: 5.5vh;
+  cursor: pointer;
+}
+
+.exerciseTileContainer:hover {
+  box-shadow: 0 0 5px $shadow;
+}
+
+.exerciseTileTick {
+  font-size: 1vh;
+  background-color: $ticks;
+  border-radius: 2vh;
+  width: 1.4vh;
+  height: 1.4vh;
+  position: relative;
+  color: $lightFont;
+  top: calc(1.4vh / -2);
+  left: calc(1.4vh / -2);
+}
+
+.exerciseDone {
+  background-image: linear-gradient($gradientLight, $gradientMedium 50%);
+}
+
+.exerciseUndone {
+  background-color: $exerciseTilesBackground;
+}
+
+.exerciseHalfDone {
+  background-image: linear-gradient(to right bottom, $gradientLight, $gradientMedium 49.9%, $exerciseTilesBackground 50%);
+}

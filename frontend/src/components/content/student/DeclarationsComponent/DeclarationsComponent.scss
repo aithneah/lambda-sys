@@ -1,0 +1,43 @@
+@import "../../../../colors";
+
+.declarationsTable {
+  width: 100%;
+  margin: 5vh 0 5vh;
+  height: fit-content;
+
+  th {
+    text-align: center;
+    padding-bottom: 2vh;
+    font-size: 2vh;
+  }
+
+  tr {
+    text-align: center;
+    border-bottom: 1px solid $tableRowBorder;
+    border-top: 1px solid $tableRowBorder;
+  }
+
+  tr:hover {
+    background-color: $tableRowBackground;
+  }
+
+  td {
+    margin: 1.5vh 0 1.5vh;
+  }
+
+  .declarationsTableHeader {
+    border-top: none;
+  }
+
+  .declarationsTableHeader:hover {
+    background-color: transparent;
+  }
+}
+
+.declarationsTableTDButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 2vh 0 2vh;
+}

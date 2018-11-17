@@ -1,0 +1,33 @@
+@import "../../../../../colors";
+
+.percentageComponentContainer {
+  margin-top: 2vh;
+}
+
+.percentageComponentBar {
+  height: 4vh;
+  width: 80%;
+  background-color: gray;
+  margin: auto;
+  border-radius: 2vh;
+}
+
+.percentageComponentPointer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1vh;
+  position: relative;
+  width: fit-content;
+}
+
+.percentageComponentPointerTriangle {
+  background-image: linear-gradient(to top, $gradientLight 20%, $gradientMedium 50%);
+  width: 2vw;
+  height: 2vw;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.percentageComponentPointerNumber {
+  font-size: 3vh;
+  font-weight: 900;
+}

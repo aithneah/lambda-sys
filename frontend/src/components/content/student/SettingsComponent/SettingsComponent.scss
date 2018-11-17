@@ -1,0 +1,28 @@
+@import '../../../../colors';
+
+.settingsComponentTitle {
+  font-size: 3vh;
+  font-weight: 900;
+  background: linear-gradient(to bottom, $gradientLight 0%, $gradientDark 90%);
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.settingsComponentTable{
+  margin: 1vh 2vw 3vh;
+  width: 40vw;
+  font-size: 2vh;
+
+  tr {
+    height: 4vh;
+    border-bottom: 1px solid $tableRowBorder;
+  }
+}
+
+.settingsComponentButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+

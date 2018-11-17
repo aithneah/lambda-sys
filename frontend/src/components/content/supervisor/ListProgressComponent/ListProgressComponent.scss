@@ -1,0 +1,35 @@
+@import "../../../../colors";
+
+.listProgressTable {
+  width: 100%;
+  font-size: 2vh;
+
+  th {
+    text-align: center;
+    font-size: 2vh;
+  }
+
+  tr {
+    text-align: center;
+    height: 7vh;
+    border-bottom: 1px solid $tableRowBorder;
+  }
+
+  tr:hover {
+    background-color: $tableRowBackground;
+  }
+
+  .listProgressTableHead {
+    border-bottom: 0;
+  }
+
+  .listProgressTableHead:hover {
+    background-color: transparent;
+  }
+
+  .listProgressTableName {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}

@@ -1,0 +1,18 @@
+@import "../../../colors";
+
+.circleButtonComponent {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 5vh;
+  color: $lightFont;
+  margin: auto;
+  text-align: center;
+  background-image: linear-gradient($gradientLight, $gradientDark);
+  font-size: 3vh;
+  cursor: pointer;
+  box-shadow: 0 0 10px $shadow;
+}
+
+.circleButtonComponent:hover {
+  box-shadow: 0 0 10px $accentColor;
+}

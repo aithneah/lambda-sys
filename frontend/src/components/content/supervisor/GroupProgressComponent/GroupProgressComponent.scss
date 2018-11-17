@@ -1,0 +1,28 @@
+@import "../../../../colors";
+
+.groupProgressTable {
+  width: 100%;
+
+  th {
+    text-align: center;
+    font-size: 2vh;
+  }
+
+  tr {
+    text-align: center;
+    height: 7vh;
+    border-bottom: 1px solid $tableRowBorder;
+  }
+
+  tr:hover {
+    background-color: $tableRowBackground;
+  }
+
+  .groupProgressTableHeader {
+    border-bottom: 0;
+  }
+
+  .groupProgressTableHeader:hover {
+    background-color: transparent;
+  }
+}

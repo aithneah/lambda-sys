@@ -1,0 +1,31 @@
+@import "../../../../../colors";
+
+.progressChartComponentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.progressChartElement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1vw;
+}
+
+.progressChartBar {
+  width: 100%;
+  height: 28vh;
+}
+
+.progressChartBar:hover {
+  box-shadow: 0 0 10px $shadow;
+  cursor: pointer;
+}
+
+.progressChartBarTitle {
+  margin-top: 1vh;
+  text-align: center;
+}

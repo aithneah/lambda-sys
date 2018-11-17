@@ -1,0 +1,12 @@
+@import "../../../../../colors";
+
+.averageComponentContainer {
+  margin: auto;
+  text-align: center;
+  font-weight: 900;
+  font-size: 5vh;
+  background: linear-gradient(to bottom, $gradientLight 40%, $gradientDark 90%);
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

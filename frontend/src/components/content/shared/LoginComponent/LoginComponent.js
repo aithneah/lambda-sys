@@ -1,8 +1,8 @@
 import React from 'react';
 import {Input} from 'antd';
 import './LoginComponent.css';
-import ButtonComponent from '../../shared/ButtonComponent/ButtonComponent';
-import CircleComponent from '../../shared/CircleContainer/CircleContainer';
+import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
+import CircleComponent from '../../../shared/CircleContainer/CircleContainer';
 
 const LoginComponent = (props) => {
     return <CircleComponent

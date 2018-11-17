@@ -5,9 +5,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 250px;
-    padding: 20px;
-    width: 80%;
-    height: 40%;
+    padding: 10vw;
+    width: 75vw;
+    height: 25vh;
+    margin: calc((75vh - 25vh) / 2) auto 0;
 }
 
 .homeMessageTitle {

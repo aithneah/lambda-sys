@@ -1,0 +1,38 @@
+@import "../../../../colors";
+
+.commentComponentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commentComponentSubtitle {
+  text-align: center;
+  font-weight: 900;
+  font-size: 2.7vh;
+  margin-top: 1vh;
+}
+
+.commentComponentText {
+  margin: 2vh 0 1vh;
+}
+
+.commentComponentResponse {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 2vh 0;
+}
+
+.commentComponentResponseText {
+  margin-right: 1vh;
+}
+
+.commentComponentButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 55%;
+  justify-content: space-around;
+}
