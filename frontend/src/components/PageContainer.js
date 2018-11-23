@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import HeaderContainer from './header/HeaderContainer';
 import ContentContainer from './content/ContentContainer';
 import './PageContainer.css';
+import Actions from "../store/actions";
+import connect from "react-redux/es/connect/connect";
 
 
 class PageContainer extends Component {
@@ -9,14 +11,28 @@ class PageContainer extends Component {
         return (
             <div className={"pageContainer"}>
                 <div className={"pageHeader"}>
-                    <HeaderContainer/>
+                    <HeaderContainer account={this.props.account}
+                                     getAccountData={this.props.getAccountData}/>
                 </div>
                 <div className={"pageContent"}>
-                    <ContentContainer/>
+                    <ContentContainer account={this.props.account}/>
                 </div>
             </div>
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+        account: state.account
+    };
+};
 
-export default PageContainer;
+const mapDispatchToProps = dispatch => {
+    return {
+        getAccountData: Actions.getAccountData.withDispatch(dispatch)
+    }
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageContainer);

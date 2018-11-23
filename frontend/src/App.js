@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PageContainer from './components/PageContainer';
-import { connect } from 'react-redux';
-import * as actionTypes from './store/actions';
 import './App.scss';
 import {withRouter} from "react-router-dom";
 
@@ -12,17 +10,5 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-    return {
-        students: state.students
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addStudent: (index, name, surname) => dispatch({type: actionTypes.ADD_STUDENT, index: index, name: name, surname: surname}),
-        removeStudent: () => dispatch({type: actionTypes.REMOVE_STUDENT})
-    }
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(App);

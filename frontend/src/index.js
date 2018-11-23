@@ -2,14 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga'
 import './index.css';
 import App from './App';
-import testReducer from './store/reducers/testReducer';
 import * as serviceWorker from './serviceWorker';
+import accountReducer from "./store/reducers/accountReducer";
+import {rootSaga} from "./store/sagas/rootSaga";
 
-const store = createStore(testReducer,
-    +  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const rootReducer = combineReducers({
+   account: accountReducer
+});
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+
+sagaMiddleware.run(rootSaga);
+
 
 const app = (
     <Provider store={store}>

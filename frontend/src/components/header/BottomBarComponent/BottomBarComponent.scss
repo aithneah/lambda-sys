@@ -3,12 +3,22 @@
 .bottombar {
     background-color: $barsAndSecondBackground;
     font-size: 2vh;
-    color: $accentColor;
     height: 5vh;
     display: flex;
     align-items: center;
 }
 
+.bottombarMenu {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  justify-content: space-between;
+}
+
 .bottombarText {
-    margin-left: 1vw;
+    margin: 0 1vw;
+    background: linear-gradient(to bottom, $gradientLight 0%, $gradientDark 90%);
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

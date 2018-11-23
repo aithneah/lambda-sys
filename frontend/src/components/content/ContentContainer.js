@@ -18,7 +18,7 @@ class ContentContainer extends React.Component {
         return <>
             <Switch>
                 <Redirect exact from="/" to="/home"/>
-                <Route exact path="/home" render={() => <HomeMessageComponent isLogged={true}/>}/>
+                <Route exact path="/home" render={() => <HomeMessageComponent isLogged={this.props.account}/>}/>
                 <Route exact path="/login" component={LoginComponent}/>
                 <Route exact path="/commentOptions" component={CommentOptionsComponent}/>
                 <Route exact path="/comment" component={CommentComponent}/>

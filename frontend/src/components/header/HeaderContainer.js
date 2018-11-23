@@ -7,8 +7,10 @@ class HeaderContainer extends Component {
     render() {
         return (
             <div className={'headerContainer'}>
-                <TopBarComponent/>
-                <BottomBarComponent/>
+                <TopBarComponent getAccountData={this.props.getAccountData}
+                                 isLogged={this.props.account}/>
+                <BottomBarComponent isLogged={this.props.account}
+                                    account={this.props.account}/>
             </div>
         );
     }
