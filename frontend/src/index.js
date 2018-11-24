@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import {BrowserRouter} from 'react-router-dom'
+import {Provider} from 'react-redux';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import './index.css';
 import App from './App';
@@ -10,14 +10,16 @@ import * as serviceWorker from './serviceWorker';
 import accountReducer from "./store/reducers/accountReducer";
 import {rootSaga} from "./store/sagas/rootSaga";
 import declarationsReducer from "./store/reducers/declarationsReducer";
+import groupsReducer from "./store/reducers/groupsReducer";
 
 
 const rootReducer = combineReducers({
-   account: accountReducer,
-   declarations: declarationsReducer
+    account: accountReducer,
+    declarations: declarationsReducer,
+    groups: groupsReducer
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));

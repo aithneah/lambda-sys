@@ -33,7 +33,9 @@ class ContentContainer extends React.Component {
                                                   .find(d => d.classesId === props.match.params.classesId).structure}
                                               getDeclarationStructureData={this.props.getDeclarationStructureData}/>)}/>
                 <Route exact path="/settings" render={() => <SettingsComponent account={this.props.account}/>}/>
-                <Route exact path="/groups" component={GroupsComponent}/>
+                <Route exact path="/groups" render={() =>
+                    <GroupsComponent groups={this.props.groups}
+                                     getAllGroupsData={this.props.getAllGroupsData}/>}/>
                 <Route exact path="/group" component={GroupProgressComponent}/>
                 <Route exact path="/list" component={ListProgressComponent}/>
                 <Route exact path="/student" component={StudentProgressComponent}/>

@@ -27,7 +27,11 @@ const Actions = makeActions({
 
     getDeclarationStructureData: (classesId) => ({ classesId }),
 
-    setDeclarationStructureData: (classesId, structure) => ({ classesId, structure })
+    setDeclarationStructureData: (classesId, structure) => ({ classesId, structure }),
+
+    getAllGroupsData: Empty,
+
+    setAllGroupsData: groups => ({ groups })
 });
 
 export default Actions;

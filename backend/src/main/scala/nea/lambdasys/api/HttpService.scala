@@ -16,6 +16,7 @@ class HttpService(config: HttpServiceConfig)
 
   private val accountApi = new AccountApi()
   private val declarationApi = new DeclarationApi()
+  private val groupApi = new GroupApi()
 
   def requestLog(request: HttpRequest): LogEntry =
     LogEntry(s"Incoming request ${request.method.value} -> " +
@@ -25,7 +26,8 @@ class HttpService(config: HttpServiceConfig)
   val route: Route = (cors() & logRequest(requestLog _) & pathPrefix("api")) {
     concat(
       accountApi.route,
-      declarationApi.route
+      declarationApi.route,
+      groupApi.route
     )
   }
 

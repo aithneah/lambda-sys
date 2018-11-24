@@ -16,10 +16,12 @@ class PageContainer extends Component {
                 </div>
                 <div className={"pageContent"}>
                     <ContentContainer account={this.props.account}
-                                      getAccountData={this.props.getAccountData}
+                                      groups={this.props.groups}
                                       declarations={this.props.declarations}
+                                      getAccountData={this.props.getAccountData}
                                       getAllDeclarationsData={this.props.getAllDeclarationsData}
-                                      getDeclarationStructureData={this.props.getDeclarationStructureData}/>
+                                      getDeclarationStructureData={this.props.getDeclarationStructureData}
+                                      getAllGroupsData={this.props.getAllGroupsData}/>
                 </div>
             </div>
         );
@@ -29,7 +31,8 @@ class PageContainer extends Component {
 const mapStateToProps = state => {
     return {
         account: state.account,
-        declarations: state.declarations
+        declarations: state.declarations,
+        groups: state.groups
     };
 };
 
@@ -37,7 +40,8 @@ const mapDispatchToProps = dispatch => {
     return {
         getAccountData: Actions.getAccountData.withDispatch(dispatch),
         getAllDeclarationsData: Actions.getAllDeclarationsData.withDispatch(dispatch),
-        getDeclarationStructureData: Actions.getDeclarationStructureData.withDispatch(dispatch)
+        getDeclarationStructureData: Actions.getDeclarationStructureData.withDispatch(dispatch),
+        getAllGroupsData: Actions.getAllGroupsData.withDispatch(dispatch)
     }
 };
 
