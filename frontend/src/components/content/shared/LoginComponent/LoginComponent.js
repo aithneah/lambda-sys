@@ -18,7 +18,7 @@ const LoginComponent = (props) => {
                 <Input size="large" placeholder='Wprowadź hasło'/>
             </div>
             <div className="loginComponentButton">
-                <ButtonComponent title="Zaloguj" type="buttonGradient" fontsize="2.5vh"/>
+                <ButtonComponent title="Zaloguj" type="buttonGradient" fontsize="2.5vh" onClick={props.getAccountData}/>
             </div>
         </div>
     </CircleComponent>;

@@ -62,7 +62,7 @@ class DeclarationsComponent extends Component {
                                         <ButtonComponent
                                             title={declaration.completionDate ? "Wypełniono" : "Wypełnij"}
                                             type={declaration.completionDate ? "buttonGray" : "buttonGradient"}
-                                            onClick={declaration.completionDate ? null : () => this.props.history.push("/declare")}
+                                            onClick={declaration.completionDate ? null : () => this.props.history.push(`/declare/${declaration.classesId}`)}
                                             fontsize="2vh"/></td>
                                 </tr>;
                             }

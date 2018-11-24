@@ -19,14 +19,19 @@ class ContentContainer extends React.Component {
             <Switch>
                 <Redirect exact from="/" to="/home"/>
                 <Route exact path="/home" render={() => <HomeMessageComponent isLogged={this.props.account}/>}/>
-                <Route exact path="/login" component={LoginComponent}/>
+                <Route exact path="/login" render={() => <LoginComponent getAccountData={this.props.getAccountData}/>}/>
                 <Route exact path="/commentOptions" component={CommentOptionsComponent}/>
                 <Route exact path="/comment" component={CommentComponent}/>
                 <Route exact path="/declarations"
                        render={() => <DeclarationsComponent declarations={this.props.declarations}
                                                             getAllDeclarationsData={this.props.getAllDeclarationsData}/>
                        }/>
-                <Route exact path="/declare" component={DeclareComponent}/>
+                <Route exact path="/declare/:classesId"
+                       render={(props) =>
+                           (<DeclareComponent classesId={props.match.params.classesId}
+                                              structure={this.props.declarations
+                                                  .find(d => d.classesId === props.match.params.classesId).structure}
+                                              getDeclarationStructureData={this.props.getDeclarationStructureData}/>)}/>
                 <Route exact path="/settings" render={() => <SettingsComponent account={this.props.account}/>}/>
                 <Route exact path="/groups" component={GroupsComponent}/>
                 <Route exact path="/group" component={GroupProgressComponent}/>
