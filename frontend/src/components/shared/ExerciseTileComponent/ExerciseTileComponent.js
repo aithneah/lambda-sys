@@ -3,7 +3,7 @@ import "./ExerciseTileComponent.scss";
 import {Icon, Popover} from 'antd';
 
 const ExerciseTileComponent = (props) => {
-        const content = <div className={"exerciseTileContainer" + " " + props.style}>
+        const content = <div className={"exerciseTileContainer " + props.type}>
             {props.tick && <div className="exerciseTileTick"><Icon type="check"/></div>}
         </div>;
 

@@ -11,8 +11,8 @@ const StudentProgressComponent = (props) =>
     <RectangularContainer title="Bajcarzyk Michał 256374"
                           icon="user"
                           buttons={() => <>
-                              <ButtonComponent title="Pytaj" style="buttonGradient" fontsize="2vh"/>
-                              <ButtonComponent title="Powrót" style="buttonGradient" fontsize="2vh"/>
+                              <ButtonComponent title="Pytaj" type="buttonGradient" fontsize="2vh"/>
+                              <ButtonComponent title="Powrót" type="buttonGradient" fontsize="2vh"/>
                           </>}>
         <div className="studentProgressContainer">
             <div className="studentProgressChartPercetageAndAverage">

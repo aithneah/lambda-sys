@@ -63,7 +63,7 @@ const DeclareComponent = (props) => {
             </div>
         </div>
         <div className="declareComponentButtons">
-            <ButtonComponent title="Wypełnij" style="buttonGradient" fontsize="2.5vh"/>
+            <ButtonComponent title="Wypełnij" type="buttonGradient" fontsize="2.5vh"/>
         </div>
     </RectangularContainer>
 };

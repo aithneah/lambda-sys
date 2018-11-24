@@ -9,9 +9,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import accountReducer from "./store/reducers/accountReducer";
 import {rootSaga} from "./store/sagas/rootSaga";
+import declarationsReducer from "./store/reducers/declarationsReducer";
+
 
 const rootReducer = combineReducers({
-   account: accountReducer
+   account: accountReducer,
+   declarations: declarationsReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;

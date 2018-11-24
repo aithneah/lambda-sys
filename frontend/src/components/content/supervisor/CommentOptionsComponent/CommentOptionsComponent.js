@@ -42,8 +42,8 @@ const CommentOptionsComponent = (props) => {
                 </RadioGroup>
             </div>
             <div className="commentOptionsComponentButtons">
-                <ButtonComponent title="Powrót" style="buttonGradient" fontsize="2.5vh"/>
-                <ButtonComponent title="Oceń" style="buttonGradient" fontsize="2.5vh"/>
+                <ButtonComponent title="Powrót" type="buttonGradient" fontsize="2.5vh"/>
+                <ButtonComponent title="Oceń" type="buttonGradient" fontsize="2.5vh"/>
             </div>
         </div>
     </CircleComponent>;

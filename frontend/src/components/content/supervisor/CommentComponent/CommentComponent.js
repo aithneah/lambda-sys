@@ -22,8 +22,8 @@ const CommentComponent = (props) => {
                 </Select>
             </div>
             <div className="commentComponentButtons">
-                <ButtonComponent title="Powrót" style="buttonGradient" fontsize="2.5vh"/>
-                <ButtonComponent title="Oceń" style="buttonGradient" fontsize="2.5vh"/>
+                <ButtonComponent title="Powrót" type="buttonGradient" fontsize="2.5vh"/>
+                <ButtonComponent title="Oceń" type="buttonGradient" fontsize="2.5vh"/>
             </div>
         </div>
     </CircleContainer>;

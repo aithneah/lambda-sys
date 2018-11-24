@@ -22,9 +22,12 @@ class ContentContainer extends React.Component {
                 <Route exact path="/login" component={LoginComponent}/>
                 <Route exact path="/commentOptions" component={CommentOptionsComponent}/>
                 <Route exact path="/comment" component={CommentComponent}/>
-                <Route exact path="/declarations" component={DeclarationsComponent}/>
+                <Route exact path="/declarations"
+                       render={() => <DeclarationsComponent declarations={this.props.declarations}
+                                                            getAllDeclarationsData={this.props.getAllDeclarationsData}/>
+                       }/>
                 <Route exact path="/declare" component={DeclareComponent}/>
-                <Route exact path="/settings" component={SettingsComponent}/>
+                <Route exact path="/settings" render={() => <SettingsComponent account={this.props.account}/>}/>
                 <Route exact path="/groups" component={GroupsComponent}/>
                 <Route exact path="/group" component={GroupProgressComponent}/>
                 <Route exact path="/list" component={ListProgressComponent}/>

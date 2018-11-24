@@ -7,7 +7,7 @@ const TopBarComponent = props => {
       <div className={'topbar'}>
           <img src={"https://svgshare.com/i/9Ar.svg"} className={'topBarLogoImage'} alt="paradygmaty programowania"/>
           <ButtonComponent title={props.isLogged ? 'Wyloguj' : 'Zaloguj'}
-                           style="buttonWhite"
+                           type="buttonWhite"
                            fontsize="2.5vh"
                            onClick={props.getAccountData}/>
       </div>

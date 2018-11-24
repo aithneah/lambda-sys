@@ -41,3 +41,13 @@
   align-items: center;
   margin: 2vh 0 2vh;
 }
+
+.declarationsComponentLoading {
+  height: 30vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 20vh;
+  color: $accentColor;
+}

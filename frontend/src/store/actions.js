@@ -19,7 +19,11 @@ const Actions = makeActions({
 
     getAccountData: Empty,
 
-    setAccountData: (index, name, course) => ({ index, name, course })
+    setAccountData: (index, name, course) => ({ index, name, course }),
+
+    getAllDeclarationsData: Empty,
+
+    setDeclarationsData: lists => ({ lists})
 });
 
 export default Actions;

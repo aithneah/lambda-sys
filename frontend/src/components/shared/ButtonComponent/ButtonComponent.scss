@@ -55,4 +55,5 @@
 .buttonGray {
     background-image: linear-gradient(to right, $buttonDisabledGradient1, $buttonDisabledGradient2);
     color: $lightFont;
+    cursor: not-allowed;
 }
