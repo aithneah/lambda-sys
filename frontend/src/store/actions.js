@@ -39,7 +39,11 @@ const Actions = makeActions({
 
     getGroupsStudentsData: (groupId) => ({ groupId }),
 
-    setGroupsStudentsData: (groupId, students) => ({ groupId, students })
+    setGroupsStudentsData: (groupId, students) => ({ groupId, students }),
+
+    getGroupsListSummary: (groupId, listId) => ({ groupId, listId }),
+
+    setGroupsListSummary: (groupId, summary) => ({ groupId, summary })
 });
 
 export default Actions;

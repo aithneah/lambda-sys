@@ -23,14 +23,18 @@
   left: calc(1.4vh / -2);
 }
 
-.exerciseDone {
+.exerciseTilePopoverContent {
+  white-space: pre-line;
+}
+
+.exercise-fully {
   background-image: linear-gradient($gradientLight, $gradientMedium 50%);
 }
 
-.exerciseUndone {
+.exercise-not {
   background-color: $exerciseTilesBackground;
 }
 
-.exerciseHalfDone {
+.exercise-partially {
   background-image: linear-gradient(to right bottom, $gradientLight, $gradientMedium 49.9%, $exerciseTilesBackground 50%);
 }

@@ -6,6 +6,7 @@ import {getDeclarationStructureData} from "./getDeclarationStructureDataSaga";
 import {getAllGroupsData} from "./getAllGroupsDataSaga";
 import {getGroupsListsData} from "./getGroupsListsDataSaga";
 import {getGroupsStudentsData} from "./getGroupsStudentsDataSaga";
+import {getGroupsListSummary} from "./getGroupsListSummarySaga";
 
 export function* rootSaga() {
     yield takeEvery(Actions.getAccountData.Type, getAccountData);
@@ -14,4 +15,5 @@ export function* rootSaga() {
     yield takeEvery(Actions.getAllGroupsData.Type, getAllGroupsData);
     yield takeEvery(Actions.getGroupsListsData.Type, getGroupsListsData);
     yield takeEvery(Actions.getGroupsStudentsData.Type, getGroupsStudentsData);
+    yield takeEvery(Actions.getGroupsListSummary.Type, getGroupsListSummary);
 }

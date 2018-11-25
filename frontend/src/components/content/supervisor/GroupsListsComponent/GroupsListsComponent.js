@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import "./GroupsListsComponent.scss";
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
+import {withRouter} from "react-router-dom";
 
 class GroupsListsComponent extends Component {
     constructor(props) {
@@ -48,7 +49,9 @@ class GroupsListsComponent extends Component {
                 {this.props.group.lists &&
                 this.props.group.lists
                     .map((list, i) => {
-                        return <tr key={i}>
+                        return <tr key={i}
+                                   onClick={() => this.props.history.push("/groups/" + this.props.groupId
+                                       + "/lists/" + list.id + "/summary")}>
                             <td>{i + 1}</td>
                             <td>{list.name}</td>
                             <td>{new Date(list.classesDate).toLocaleString(locale, this.dateOptions)}</td>
@@ -61,4 +64,4 @@ class GroupsListsComponent extends Component {
     }
 }
 
-export default GroupsListsComponent;
+export default withRouter(GroupsListsComponent);

@@ -17,6 +17,7 @@ class HttpService(config: HttpServiceConfig)
   private val accountApi = new AccountApi()
   private val declarationApi = new DeclarationApi()
   private val groupApi = new GroupApi()
+  private val studentApi = new StudentApi()
 
   def requestLog(request: HttpRequest): LogEntry =
     LogEntry(s"Incoming request ${request.method.value} -> " +
@@ -27,7 +28,8 @@ class HttpService(config: HttpServiceConfig)
     concat(
       accountApi.route,
       declarationApi.route,
-      groupApi.route
+      groupApi.route,
+      studentApi.route
     )
   }
 

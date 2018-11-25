@@ -47,7 +47,12 @@ class ContentContainer extends React.Component {
                                              getGroupsStudentsData={this.props.getGroupsStudentsData}
                                              group={this.props.groups.find(group => group.id === props.match.params.id)}/>}
                 />
-                <Route exact path="/list" component={ListProgressComponent}/>
+                <Route exact path="/groups/:groupId/lists/:listId/summary" render={(props) =>
+                    <ListProgressComponent groupId={props.match.params.groupId}
+                                           listId={props.match.params.listId}
+                                           getGroupsListSummary={this.props.getGroupsListSummary}
+                                           group={this.props.groups.find(group =>
+                                               group.id === props.match.params.groupId)}/>}/>
                 <Route exact path="/student" component={StudentProgressComponent}/>
             </Switch>
         </>;

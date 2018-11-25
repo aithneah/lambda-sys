@@ -7,13 +7,17 @@ const groupsReducer = (state = initialState, action) => {
         case Actions.setAllGroupsData.Type:
             return [...action.groups];
         case Actions.setGroupsListsData.Type:
-            return [...(state
+            return [...state
                 .map(group => group.id === action.groupId ?
-                    {...group, lists: action.lists} : group))];
+                    {...group, lists: action.lists} : group)];
         case Actions.setGroupsStudentsData.Type:
-            return [...(state
+            return [...state
                 .map(group => group.id === action.groupId ?
-                    {...group, students: action.students} : group))];
+                    {...group, students: action.students} : group)];
+        case Actions.setGroupsListSummary.Type:
+            return [...state
+                .map(group => group.id === action.groupId ?
+                {...group, summary: action.summary} : group)];
         default:
             return state;
     }
