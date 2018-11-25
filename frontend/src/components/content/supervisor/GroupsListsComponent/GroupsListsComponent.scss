@@ -1,0 +1,28 @@
+@import "../../../../colors";
+
+.groupsListsTable {
+  width: 100%;
+
+  th {
+    text-align: center;
+    font-size: 2vh;
+  }
+
+  tr {
+    text-align: center;
+    height: 7vh;
+    border-bottom: 1px solid $tableRowBorder;
+  }
+
+  tr:hover {
+    background-color: $tableRowBackground;
+  }
+
+  .groupsListsTableHeader {
+    border-bottom: 0;
+  }
+
+  .groupsListsTableHeader:hover {
+    background-color: transparent;
+  }
+}

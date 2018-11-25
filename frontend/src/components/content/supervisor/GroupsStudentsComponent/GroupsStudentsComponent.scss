@@ -1,11 +1,12 @@
 @import "../../../../colors";
 
-.groupProgressTable {
+.groupsStudentsTable {
   width: 100%;
+  font-size: 2vh;
 
   th {
     text-align: center;
-    font-size: 2vh;
+    font-size: 2.2vh;
   }
 
   tr {
@@ -18,11 +19,21 @@
     background-color: $tableRowBackground;
   }
 
-  .groupProgressTableHeader {
+  .groupsStudentsTableHeader {
     border-bottom: 0;
   }
 
-  .groupProgressTableHeader:hover {
+  .groupsStudentsTableHeader:hover {
     background-color: transparent;
   }
+
+  .groupsStudentsTableButtons {
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0;
+    align-items: center;
+  }
 }
+

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './GroupsComponent.scss';
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
+import {withRouter} from "react-router-dom";
 
 class GroupsComponent extends Component {
     constructor(props) {
@@ -46,8 +47,14 @@ class GroupsComponent extends Component {
                         <td>{group.classesDate}</td>
                         <td>{group.studentCount + "/18"}</td>
                         <td className="groupsComponentTableButtons">
-                            <ButtonComponent title="Przeglądaj postępy" type="buttonBlue" fontsize="2vh" />
-                            <ButtonComponent title="Edytuj grupę" type="buttonGreen" fontsize="2vh" />
+                            <ButtonComponent title="Przeglądaj postępy"
+                                             type="buttonBlue"
+                                             fontsize="2vh"
+                                             onClick={() => this.props.history.push("/groups/" + group.id + "/lists")}/>
+                            <ButtonComponent title="Edytuj grupę"
+                                             type="buttonGreen"
+                                             fontsize="2vh"
+                                             onClick={() => this.props.history.push("/groups/" + group.id + "/students")}/>
                             <ButtonComponent title="Usuń grupę" type="buttonRed" fontsize="2h" />
                         </td>
                     </tr>
@@ -59,4 +66,4 @@ class GroupsComponent extends Component {
 }
 
 
-export default GroupsComponent;
+export default withRouter(GroupsComponent);

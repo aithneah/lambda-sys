@@ -21,7 +21,9 @@ class PageContainer extends Component {
                                       getAccountData={this.props.getAccountData}
                                       getAllDeclarationsData={this.props.getAllDeclarationsData}
                                       getDeclarationStructureData={this.props.getDeclarationStructureData}
-                                      getAllGroupsData={this.props.getAllGroupsData}/>
+                                      getAllGroupsData={this.props.getAllGroupsData}
+                                      getGroupsListsData={this.props.getGroupsListsData}
+                                      getGroupsStudentsData={this.props.getGroupsStudentsData} />
                 </div>
             </div>
         );
@@ -41,7 +43,9 @@ const mapDispatchToProps = dispatch => {
         getAccountData: Actions.getAccountData.withDispatch(dispatch),
         getAllDeclarationsData: Actions.getAllDeclarationsData.withDispatch(dispatch),
         getDeclarationStructureData: Actions.getDeclarationStructureData.withDispatch(dispatch),
-        getAllGroupsData: Actions.getAllGroupsData.withDispatch(dispatch)
+        getAllGroupsData: Actions.getAllGroupsData.withDispatch(dispatch),
+        getGroupsListsData: Actions.getGroupsListsData.withDispatch(dispatch),
+        getGroupsStudentsData: Actions.getGroupsStudentsData.withDispatch(dispatch)
     }
 };
 

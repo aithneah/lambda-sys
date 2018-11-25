@@ -8,10 +8,11 @@ import DeclareComponent from "./student/DeclareComponent/DeclareComponent";
 import './ContentContainer.css';
 import SettingsComponent from "./student/SettingsComponent/SettingsComponent";
 import GroupsComponent from "./supervisor/GroupsComponent/GroupsComponent";
-import GroupProgressComponent from "./supervisor/GroupProgressComponent/GroupProgressComponent";
+import GroupsListsComponent from "./supervisor/GroupsListsComponent/GroupsListsComponent";
 import ListProgressComponent from "./supervisor/ListProgressComponent/ListProgressComponent";
 import StudentProgressComponent from "./supervisor/StudentProgressComponent/StudentProgressComponent";
 import CommentComponent from "./supervisor/CommentComponent/CommentComponent";
+import GroupsStudentsComponent from "./supervisor/GroupsStudentsComponent/GroupsStudentsComponent";
 
 class ContentContainer extends React.Component {
     render() {
@@ -36,7 +37,16 @@ class ContentContainer extends React.Component {
                 <Route exact path="/groups" render={() =>
                     <GroupsComponent groups={this.props.groups}
                                      getAllGroupsData={this.props.getAllGroupsData}/>}/>
-                <Route exact path="/group" component={GroupProgressComponent}/>
+                <Route exact path="/groups/:id/lists" render={(props) =>
+                    <GroupsListsComponent groupId={props.match.params.id}
+                                          getGroupsListsData={this.props.getGroupsListsData}
+                                          group={this.props.groups.find(group => group.id === props.match.params.id)}/>}
+                />
+                <Route exact path="/groups/:id/students" render={(props) =>
+                    <GroupsStudentsComponent groupId={props.match.params.id}
+                                             getGroupsStudentsData={this.props.getGroupsStudentsData}
+                                             group={this.props.groups.find(group => group.id === props.match.params.id)}/>}
+                />
                 <Route exact path="/list" component={ListProgressComponent}/>
                 <Route exact path="/student" component={StudentProgressComponent}/>
             </Switch>
