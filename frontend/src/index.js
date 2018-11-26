@@ -11,12 +11,14 @@ import accountReducer from "./store/reducers/accountReducer";
 import {rootSaga} from "./store/sagas/rootSaga";
 import declarationsReducer from "./store/reducers/declarationsReducer";
 import groupsReducer from "./store/reducers/groupsReducer";
+import studentsReducer from "./store/reducers/studentsReducer";
 
 
 const rootReducer = combineReducers({
     account: accountReducer,
     declarations: declarationsReducer,
-    groups: groupsReducer
+    groups: groupsReducer,
+    student: studentsReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

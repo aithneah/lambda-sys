@@ -17,8 +17,8 @@ class StudentApi extends Directives with SprayJsonSupport with DefaultJsonProtoc
     StudentOverallProgress("281233",
       "Mariusz Kowalczyk",
       "bad",
-      "78,8%",
-      Seq("95%", "67%", "30%", "0%", "13%"),
+      64,
+      Seq(95, 67, 30, 0, 13),
       DeclarationStructure(
         DeclarationNode("Lista 1", "list",
           DeclarationNode("Zadanie 1", "exercise", "not", Some(false),

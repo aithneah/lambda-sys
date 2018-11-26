@@ -1,12 +1,13 @@
 import Actions from "../actions";
-import { takeEvery } from 'redux-saga/effects';
-import { getAccountData } from "./getAccountDataSaga";
+import {takeEvery} from 'redux-saga/effects';
+import {getAccountData} from "./getAccountDataSaga";
 import {getAllDeclarationsData} from "./getAllDeclarationsSaga";
 import {getDeclarationStructureData} from "./getDeclarationStructureDataSaga";
 import {getAllGroupsData} from "./getAllGroupsDataSaga";
 import {getGroupsListsData} from "./getGroupsListsDataSaga";
 import {getGroupsStudentsData} from "./getGroupsStudentsDataSaga";
 import {getGroupsListSummary} from "./getGroupsListSummarySaga";
+import {getStudentProgress} from "./getStudentProgressSaga";
 
 export function* rootSaga() {
     yield takeEvery(Actions.getAccountData.Type, getAccountData);
@@ -16,4 +17,5 @@ export function* rootSaga() {
     yield takeEvery(Actions.getGroupsListsData.Type, getGroupsListsData);
     yield takeEvery(Actions.getGroupsStudentsData.Type, getGroupsStudentsData);
     yield takeEvery(Actions.getGroupsListSummary.Type, getGroupsListSummary);
+    yield takeEvery(Actions.getStudentProgress.Type, getStudentProgress);
 }

@@ -5,6 +5,7 @@ import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
 import ExerciseTileComponent from "../../../shared/ExerciseTileComponent/ExerciseTileComponent";
 import BadgeComponent from "../../../shared/BadgeComponent/BadgeComponent";
 import CircleButtonComponent from "../../../shared/CircleButtonComponent/CircleButtonComponent";
+import {withRouter} from "react-router-dom";
 
 class ListProgressComponent extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class ListProgressComponent extends Component {
         else if (!prevState.isLoading && !this.state.isLoading) this.fetchListsSummary();
     }
 
-    completeWithTd = (number) => new Array(number).fill(0).map(() => <td></td>);
+    completeWithTd = (number) => new Array(number).fill(0).map((e, i) => <td key={i + 'td'}/>);
 
     buildPartialData = (nodes) => {
         return nodes.map(node =>
@@ -69,15 +70,16 @@ class ListProgressComponent extends Component {
                 {this.props.group.summary && this.props.group.summary
                     .map((student, i) => {
                         return <tr key={i}>
-                            <td>{student.index}</td>
-                            <td>{student.name}</td>
-                            <td><BadgeComponent number={student.answersCount} type={"badge-" + student.overallNote}/>
+                            <td onClick={() => this.props.history.push("/students/" + student.index)}>{student.index}</td>
+                            <td onClick={() => this.props.history.push("/students/" + student.index)}>{student.name}</td>
+                            <td onClick={() => this.props.history.push("/students/" + student.index)}><BadgeComponent number={student.answersCount} type={"badge-" + student.overallNote}/>
                             </td>
                             {student.declarationStructure.structure
                                 .find(list => list.name === currentListName).children
                                 .map((exercise, i) => <td key={"e" + i}>
                                     <ExerciseTileComponent type={"exercise-" + exercise.isDeclared}
                                                            tick={exercise.isChecked}
+                                                           popover={exercise.isDeclared === "partially"}
                                                            exerciseDetails={this.buildPartialData(exercise.children).join("\n")}/>
                                 </td>)}
 
@@ -92,4 +94,4 @@ class ListProgressComponent extends Component {
     }
 }
 
-export default ListProgressComponent;
+export default withRouter(ListProgressComponent);

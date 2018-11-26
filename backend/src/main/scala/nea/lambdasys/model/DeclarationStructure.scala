@@ -44,15 +44,15 @@ object DeclarationStructure {
        t: String,
        d: String,
        c: Option[Boolean],
-       cm: Option[String],
        nt: Option[String],
-       ch: Seq[Node]) => Node(n, t, d, c, cm, nt, ch: _*),
+       cm: Option[String],
+       ch: Seq[Node]) => Node(n, t, d, c, nt, cm, ch: _*),
       "name",
       "type",
       "isDeclared",
       "isChecked",
-      "comment",
       "note",
+      "comment",
       "children")))
   }
 

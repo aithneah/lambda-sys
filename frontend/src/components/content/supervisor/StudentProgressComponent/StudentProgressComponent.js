@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import "./StudentProgressComponent.scss";
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
@@ -7,34 +7,61 @@ import AverageComponent from "./AverageComponent/AverageComponent";
 import PercentageComponent from "./PercentageComponent/PercentageComponent";
 import DeclarationsOverviewComponent from "./DeclarationsOverviewComponent/DeclarationsOverviewComponent";
 
-const StudentProgressComponent = (props) =>
-    <RectangularContainer title="Bajcarzyk Michał 256374"
-                          icon="user"
-                          buttons={() => <>
-                              <ButtonComponent title="Pytaj" type="buttonGradient" fontsize="2vh"/>
-                              <ButtonComponent title="Powrót" type="buttonGradient" fontsize="2vh"/>
-                          </>}>
-        <div className="studentProgressContainer">
-            <div className="studentProgressChartPercetageAndAverage">
-                <div className="studentProgressChart">
-                    <div className="studentProgressSectionTitle">Poziom ukończenia każdej listy zadań:</div>
-                    <ProgressChartComponent percentage={[0, 55, 100]}/>
+class StudentProgressComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true
+        }
+    }
+
+    fetchStudentProgress() {
+        if (!this.state.isLoading) this.setState({isLoading: true});
+        this.props.getStudentProgress(this.props.studentId);
+    }
+
+    componentDidMount() {
+        this.fetchStudentProgress();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.isLoading && this.state.isLoading) this.setState({isLoading: false});
+        else if (!prevState.isLoading && !this.state.isLoading) this.fetchStudentProgress();
+    }
+
+    render() {
+        return <RectangularContainer title={this.props.student ? this.props.student.name + " " + this.props.student.index : ""}
+                                     icon="user"
+                                     buttons={() => <>
+                                         <ButtonComponent title="Pytaj" type="buttonGradient" fontsize="2.2vh"/>
+                                         <ButtonComponent title="Powrót" type="buttonGradient" fontsize="2.2vh"/>
+                                     </>}>
+            <div className="studentProgressContainer">
+                <div className="studentProgressChartPercetageAndAverage">
+                    <div className="studentProgressChart">
+                        <div className="studentProgressSectionTitle">Poziom ukończenia każdej listy zadań:</div>
+                        <ProgressChartComponent percentage={this.props.student ? this.props.student.listsPercentage : []}/>
+                    </div>
+                    <div className="studentProgressPercentageAndAverage">
+                        <div className="studentProgressPercentage">
+                            <div className="studentProgressSectionTitle">Procent wykonania wszystkich zadań:</div>
+                            <PercentageComponent percentage={this.props.student ? this.props.student.overallExercisesPercentage : 0}/>
+                        </div>
+                        <div className="studentProgressAverage">
+                            <div className="studentProgressSectionTitle">Dotychczasowa ocena odpowiedzi:</div>
+                            <AverageComponent average={this.props.student ?
+                                (this.props.student.overallNote === "good" ? "pozytywny"
+                                    : (this.props.student.overallNote === "bad" ? "negatywny" : "neutralny"))
+                                : "nieznany"}/>
+                        </div>
+                    </div>
                 </div>
-                <div className="studentProgressPercentageAndAverage">
-                    <div className="studentProgressPercentage">
-                        <div className="studentProgressSectionTitle">Procent wykonania wszystkich zadań:</div>
-                        <PercentageComponent percentage={90}/>
-                    </div>
-                    <div className="studentProgressAverage">
-                        <div className="studentProgressSectionTitle">Dotychczasowa ocena odpowiedzi:</div>
-                        <AverageComponent average="pozytywny"/>
-                    </div>
+                <div className="studentProgressDeclarations">
+                    <DeclarationsOverviewComponent lists={this.props.student ? this.props.student.declarationStructure.structure : null}/>
                 </div>
             </div>
-            <div className="studentProgressDeclarations">
-                <DeclarationsOverviewComponent/>
-            </div>
-        </div>
-    </RectangularContainer>;
+        </RectangularContainer>;
+    }
+}
 
 export default StudentProgressComponent;

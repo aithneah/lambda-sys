@@ -18,13 +18,15 @@ class PageContainer extends Component {
                     <ContentContainer account={this.props.account}
                                       groups={this.props.groups}
                                       declarations={this.props.declarations}
+                                      student={this.props.student}
                                       getAccountData={this.props.getAccountData}
                                       getAllDeclarationsData={this.props.getAllDeclarationsData}
                                       getDeclarationStructureData={this.props.getDeclarationStructureData}
                                       getAllGroupsData={this.props.getAllGroupsData}
                                       getGroupsListsData={this.props.getGroupsListsData}
                                       getGroupsStudentsData={this.props.getGroupsStudentsData}
-                                      getGroupsListSummary={this.props.getGroupsListSummary}/>
+                                      getGroupsListSummary={this.props.getGroupsListSummary}
+                                      getStudentProgress={this.props.getStudentProgress}/>
                 </div>
             </div>
         );
@@ -35,7 +37,8 @@ const mapStateToProps = state => {
     return {
         account: state.account,
         declarations: state.declarations,
-        groups: state.groups
+        groups: state.groups,
+        student: state.student
     };
 };
 
@@ -47,7 +50,8 @@ const mapDispatchToProps = dispatch => {
         getAllGroupsData: Actions.getAllGroupsData.withDispatch(dispatch),
         getGroupsListsData: Actions.getGroupsListsData.withDispatch(dispatch),
         getGroupsStudentsData: Actions.getGroupsStudentsData.withDispatch(dispatch),
-        getGroupsListSummary: Actions.getGroupsListSummary.withDispatch(dispatch)
+        getGroupsListSummary: Actions.getGroupsListSummary.withDispatch(dispatch),
+        getStudentProgress: Actions.getStudentProgress.withDispatch(dispatch)
     }
 };
 

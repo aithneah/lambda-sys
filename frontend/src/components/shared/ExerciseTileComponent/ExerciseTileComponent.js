@@ -9,7 +9,7 @@ const ExerciseTileComponent = (props) => {
 
     const popoverContent = <div className={"exerciseTilePopoverContent"}>{props.exerciseDetails}</div>;
 
-        return props.type === 'exercise-partially' ? <Popover style={{whiteSpace: "pre-line"}} content={popoverContent}
+        return props.popover ? <Popover style={{whiteSpace: "pre-line"}} content={popoverContent}
                                                              placement="bottomRight">
             {content}
         </Popover> : content

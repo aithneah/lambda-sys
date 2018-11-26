@@ -5,8 +5,8 @@ import spray.json._
 case class StudentOverallProgress (index: String,
                                    name: String,
                                    overallNote: String,
-                                   overallExercisesPercentage: String,
-                                   listsPercentage: Seq[String],
+                                   overallExercisesPercentage: Int,
+                                   listsPercentage: Seq[Int],
                                    declarationStructure: DeclarationStructure)
 
 object StudentOverallProgress {
