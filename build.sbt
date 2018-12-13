@@ -22,5 +22,7 @@ lazy val backendDependencies = Seq(
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.1.3",
   "org.scalatest" %% "scalatest" % "3.0.5" % Test,
   "com.typesafe.slick" %% "slick" % "3.2.3",
-  "io.spray" %% "spray-json" % "1.3.4"
+  "io.spray" %% "spray-json" % "1.3.4",
+  "postgresql" % "postgresql" % "9.1-901.jdbc4",
+  "org.slf4j" % "slf4j-nop" % "1.6.4",
 )

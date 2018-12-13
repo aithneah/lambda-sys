@@ -6,4 +6,6 @@ import nea.lambdasys.api.HttpServiceConfig
 class LambdaSysConfig(raw: Config) {
 
   val httpServiceConfig: HttpServiceConfig = new HttpServiceConfig(raw.getConfig("http-service"))
+
+  val dbConfig: Config = raw.getConfig("db")
 }

@@ -4,6 +4,8 @@ import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import com.typesafe.config.ConfigFactory
 import nea.lambdasys.api.HttpService
+import nea.lambdasys.db.{LambdaDb, Students}
+import slick.jdbc.PostgresProfile.api._
 
 object Main {
 
@@ -13,21 +15,16 @@ object Main {
     implicit val system: ActorSystem = ActorSystem("my-system")
     implicit val materializer: Materializer = ActorMaterializer()
 
+    import system.dispatcher
+
+    val db = Database.forConfig("", config.dbConfig)
+//
+//    db.run(LambdaDb.recreateSchema)
+//      .onComplete(_ => system.terminate())
+
     val httpService = new HttpService(config.httpServiceConfig)
 
     httpService.start()
     println(s"Server online at http://${config.httpServiceConfig.host}:${config.httpServiceConfig.port}/")
   }
-
-  // STUDENT'S ENDPOINTS:
-    // GET all declarations
-    // PUT declaration submit
-    // PUT password reset
-
-  // TUTOR'S ENDPOINTS:
-    // POST add new student group (import group from excel)
-    // GET all student groups
-    // DELETE student group
-    // POST student group
-    // GET all declarations per group => in each declaration student's info and which exercises they did
 }
