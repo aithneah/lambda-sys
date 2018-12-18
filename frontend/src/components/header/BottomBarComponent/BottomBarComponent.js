@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom";
 
 const BottomBarComponent = props => {
     const supervisorMenu = <div className={'bottombarMenu'}>
-        <div className={'bottombarText'}>Zarządzaj listami</div>
+        <div className={'bottombarText'} onClick={() => props.history.push("/lists")}>Zarządzaj listami</div>
         <div className={'bottombarText'}>|</div>
         <div className={'bottombarText'} onClick={() => props.history.push("/groups")}>Zarządzaj grupami</div>
         <div className={'bottombarText'}>|</div>
