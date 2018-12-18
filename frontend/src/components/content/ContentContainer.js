@@ -13,6 +13,8 @@ import ListProgressComponent from "./supervisor/ListProgressComponent/ListProgre
 import StudentProgressComponent from "./supervisor/StudentProgressComponent/StudentProgressComponent";
 import CommentComponent from "./supervisor/CommentComponent/CommentComponent";
 import GroupsStudentsComponent from "./supervisor/GroupsStudentsComponent/GroupsStudentsComponent";
+import ListsComponent from "./supervisor/ListsComponent/ListsComponent";
+import ExercisesComponent from "./supervisor/ExercisesComponent/ExercisesComponent";
 
 class ContentContainer extends React.Component {
     render() {
@@ -57,6 +59,9 @@ class ContentContainer extends React.Component {
                     <StudentProgressComponent getStudentProgress={this.props.getStudentProgress}
                                               studentId={props.match.params.studentId}
                                               student={this.props.student}/>}/>
+                <Route exact path="/lists" render={() => <ListsComponent/>} />
+                <Route exact path="/lists/:listId" render={(props) =>
+                    <ExercisesComponent listId={props.match.params.listId}/>}/>
             </Switch>
         </>;
     }

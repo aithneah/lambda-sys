@@ -1,0 +1,24 @@
+@import "../../../../colors";
+
+.listsComponentItemStyle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vh;
+}
+
+.listsComponentItemStyle:hover {
+  background-color: $hoveredItemBackground;
+  border-radius: 1vh;
+}
+
+.listsComponentItemStyleTitle {
+  font-size: 2.6vh;
+  font-weight: bold;
+}
+
+.listsComponentItemStyleButtons {
+  display: flex;
+  flex-direction: row;
+}
