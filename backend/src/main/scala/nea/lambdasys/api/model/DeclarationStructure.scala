@@ -1,6 +1,6 @@
-package nea.lambdasys.model
+package nea.lambdasys.api.model
 
-import nea.lambdasys.model.DeclarationStructure.Node
+import nea.lambdasys.api.model.DeclarationStructure.Node
 import spray.json._
 
 case class DeclarationStructure(structure: Node*)
@@ -11,7 +11,7 @@ object DeclarationStructure {
 
   case class Node(name: String,
                   `type`: String,
-                  isDeclared: String,
+                  isDeclared: DeclarationDegree,
                   isChecked: Option[Boolean],
                   comment: Option[String],
                   note: Option[String],
@@ -19,7 +19,7 @@ object DeclarationStructure {
 
     def copy(name: String = name,
              `type`: String = `type`,
-             isDeclared: String = isDeclared,
+             isDeclared: DeclarationDegree = isDeclared,
              isChecked: Option[Boolean] = isChecked,
              children: Seq[Node] = children): Node =
       Node(name, `type`, isDeclared, isChecked, comment, note, children: _*)
@@ -30,11 +30,11 @@ object DeclarationStructure {
     def apply(name: String,
               `type`: String,
               children: Node*): Node =
-      new Node(name, `type`, "not", None, Some(""), None, children: _*)
+      new Node(name, `type`, DeclarationDegree.Not, None, Some(""), None, children: _*)
 
     def apply(name: String,
               `type`: String,
-              isDeclared: String,
+              isDeclared: DeclarationDegree,
               isChecked: Option[Boolean],
               children: Node*): Node =
       new Node(name, `type`, isDeclared, isChecked, Some(""), None, children: _*)
@@ -42,7 +42,7 @@ object DeclarationStructure {
     implicit val format: RootJsonFormat[Node] = rootFormat(lazyFormat(jsonFormat(
       (n: String,
        t: String,
-       d: String,
+       d: DeclarationDegree,
        c: Option[Boolean],
        nt: Option[String],
        cm: Option[String],

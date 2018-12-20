@@ -2,50 +2,76 @@ package nea.lambdasys.api
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
-import nea.lambdasys.model.{DeclarationStructure, StudentViewOfDeclaration}
+import nea.lambdasys.api.model.{DeclarationDegree, DeclarationStructure, StudentViewOfDeclaration}
+import nea.lambdasys.core.DeclarationManager
+import nea.lambdasys.core.domain.{Assignment, Exercise}
 import spray.json.DefaultJsonProtocol
 
-class DeclarationApi extends Directives with SprayJsonSupport with DefaultJsonProtocol {
+import scala.async.Async._
+import scala.concurrent.{ExecutionContext, Future}
 
-  val route: Route = pathPrefix("declarations") {
+class DeclarationApi(declarations: DeclarationManager)
+                    (implicit ec: ExecutionContext) extends Directives
+  with SprayJsonSupport
+  with DefaultJsonProtocol {
+
+  def route(studentIndex: String): Route = pathPrefix("declarations") {
     concat(
       (get & pathEnd) {
-        complete(getStudentsDeclarations())
+        complete(getStudentsDeclarations(studentIndex))
       },
-      (get & path(Segment / "structure")) { classesId => complete(getDeclarationStructure(classesId)) },
+      (get & path(IntNumber / "structure")) {
+        classesId => complete(getDeclarationStructure(studentIndex, classesId))
+      },
     )
   }
 
-  def getStudentsDeclarations(): Seq[StudentViewOfDeclaration] =
-    Seq(
+  def getStudentsDeclarations(studentIndex: String): Future[Seq[StudentViewOfDeclaration]] = async {
+    val studentsDeclarations = await(declarations.getDeclarations(studentIndex))
+
+    studentsDeclarations.map { declaration =>
       StudentViewOfDeclaration(
-        lists = Seq("Lista 3", "Lista 4"),
-        classesId = "2",
-        classesDate = "2018-11-21T15:15:00",
-        completionDate = None
-      ),
-      StudentViewOfDeclaration(
-        lists = Seq("Lista 1", "Lista 2"),
-        classesId = "1",
-        classesDate = "2018-11-21T15:15:00",
-        completionDate = Some("2018-11-14T15:12:32")
+        lists = declaration.assignments.map(_.name),
+        classesId = declaration.classesId,
+        classesDate = "NOT IMPLEMENTED",
+        completionDate = declaration.submitted.map(_.toString)
       )
-    )
+    }
+  }
 
   import DeclarationStructure.{Node => DeclarationNode}
 
-  def getDeclarationStructure(classesId: String): DeclarationStructure =
+  def getDeclarationStructure(studentIndex: String, classesId: Int): Future[DeclarationStructure] = async {
+    val declaration = await(declarations.getDeclaration(studentIndex, classesId))
+
+    def makeExerciseNode(exercise: Exercise): DeclarationNode = {
+      val children = exercise.children.map(makeExerciseNode)
+      val declarationDegree = children.foldLeft(DeclarationDegree.fromBoolean(exercise.isDeclared))(_ | _.isDeclared)
+
+      DeclarationNode(
+        name = exercise.name,
+        `type` = exercise.`type`.toString.toLowerCase,
+        isDeclared = declarationDegree,
+        None,
+        children: _*
+      )
+    }
+
+    def makeAssignmentNode(assignment: Assignment): DeclarationNode = {
+      val children = assignment.exercises.map(makeExerciseNode)
+      val declarationDegree = children.map(_.isDeclared).reduceOption(_ | _).getOrElse(DeclarationDegree.Not)
+
+      DeclarationNode(
+        name = assignment.name,
+        `type` = "list",
+        isDeclared = declarationDegree,
+        None,
+        children: _*
+      )
+    }
+
     DeclarationStructure(
-      DeclarationNode("Lista 3", "list",
-        DeclarationNode("Zadanie 1", "exercise",
-          DeclarationNode("Podpunkt A", "subpoint",
-            DeclarationNode("Scala", "lang"),
-            DeclarationNode("OCaml", "lang")),
-          DeclarationNode("Podpunkt B", "subpoint")),
-        DeclarationNode("Zadanie 2", "exercise")),
-      DeclarationNode("Lista 4", "list",
-        DeclarationNode("Zadanie 1", "exercise",
-          DeclarationNode("Scala", "lang"),
-          DeclarationNode("OCaml", "lang")))
+      declaration.get.assignments.map(makeAssignmentNode): _*
     )
+  }
 }

@@ -1,8 +1,9 @@
-package nea.lambdasys.db
+package nea.lambdasys.db.tables
 
 import java.time.{Duration, LocalDate, LocalTime}
 
-import nea.lambdasys.domain.Classes
+import nea.lambdasys.db.ScalaTypesSupport
+import nea.lambdasys.db.model.Classes
 import slick.jdbc.PostgresProfile.api._
 
 class Classess(tag: Tag) extends Table[Classes](tag, "CLASSES") with ScalaTypesSupport {

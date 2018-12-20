@@ -1,4 +1,4 @@
-package nea.lambdasys.domain
+package nea.lambdasys.db.model
 
 import java.time.{DayOfWeek, LocalTime}
 

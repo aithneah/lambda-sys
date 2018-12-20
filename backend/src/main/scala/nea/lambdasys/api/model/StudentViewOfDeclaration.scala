@@ -1,9 +1,9 @@
-package nea.lambdasys.model
+package nea.lambdasys.api.model
 
 import spray.json._
 
 case class StudentViewOfDeclaration(lists: Seq[String],
-                                    classesId: String,
+                                    classesId: Int,
                                     classesDate: String,
                                     completionDate: Option[String])
 

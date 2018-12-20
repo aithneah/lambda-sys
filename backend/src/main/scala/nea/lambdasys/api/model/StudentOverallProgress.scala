@@ -1,4 +1,4 @@
-package nea.lambdasys.model
+package nea.lambdasys.api.model
 
 import spray.json._
 

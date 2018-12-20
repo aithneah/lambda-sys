@@ -1,8 +1,9 @@
-package nea.lambdasys.db
+package nea.lambdasys.db.tables
 
 import java.time.LocalDateTime
 
-import nea.lambdasys.domain.Declaration
+import nea.lambdasys.db.ScalaTypesSupport
+import nea.lambdasys.db.model.Declaration
 import slick.jdbc.PostgresProfile.api._
 
 class Declarations(tag: Tag) extends Table[Declaration](tag, "DECLARATIONS") with ScalaTypesSupport {
@@ -24,3 +25,5 @@ class Declarations(tag: Tag) extends Table[Declaration](tag, "DECLARATIONS") wit
 
   def student = foreignKey("STUDENT_FK", studentIndex, Students)(_.index)
 }
+
+object Declarations extends TableQuery(new Declarations(_))

@@ -3,7 +3,8 @@ package nea.lambdasys.db
 import java.sql
 import java.time._
 
-import nea.lambdasys.domain.WeekParity
+import nea.lambdasys.core.domain.ExerciseType
+import nea.lambdasys.db.model.WeekParity
 import slick.jdbc.PostgresProfile.api._
 
 trait ScalaTypesSupport {
@@ -37,5 +38,11 @@ trait ScalaTypesSupport {
   implicit val localDateTimeColumnType = MappedColumnType.base[LocalDateTime, sql.Timestamp](
     sql.Timestamp.valueOf,
     _.toLocalDateTime,
+  )
+
+  implicit val exerciseTypeColumnType = MappedColumnType.base[ExerciseType, String](
+    _.toString.toLowerCase,
+    s => ExerciseType.fromString(s.capitalize)
+      .getOrElse(throw new IllegalArgumentException(s"Could not deserialize [$s] as exercise type.")),
   )
 }

@@ -1,4 +1,4 @@
-package nea.lambdasys.domain
+package nea.lambdasys.db.model
 
 case class Student(index: String,
                    name: String,

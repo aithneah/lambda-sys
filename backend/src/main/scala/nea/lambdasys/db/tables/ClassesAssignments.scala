@@ -1,6 +1,6 @@
-package nea.lambdasys.db
+package nea.lambdasys.db.tables
 
-import nea.lambdasys.domain.ClassesAssignment
+import nea.lambdasys.db.model.ClassesAssignment
 import slick.jdbc.PostgresProfile.api._
 
 class ClassesAssignments(tag: Tag) extends Table[ClassesAssignment](tag, "CLASSES_ASSIGNMENTS") {

@@ -1,6 +1,6 @@
-package nea.lambdasys.db
+package nea.lambdasys.db.tables
 
-import nea.lambdasys.domain.Student
+import nea.lambdasys.db.model.Student
 import slick.jdbc.PostgresProfile.api._
 
 class Students(tag: Tag) extends Table[Student](tag, "STUDENTS") {

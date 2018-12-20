@@ -1,6 +1,5 @@
 name := "lambda-sys"
 
-
 lazy val commonSettings = Seq(
   version := "0.1",
   scalaVersion := "2.12.6"
@@ -25,4 +24,5 @@ lazy val backendDependencies = Seq(
   "io.spray" %% "spray-json" % "1.3.4",
   "postgresql" % "postgresql" % "9.1-901.jdbc4",
   "org.slf4j" % "slf4j-nop" % "1.6.4",
+  "org.scala-lang.modules" %% "scala-async" % "0.9.7"
 )

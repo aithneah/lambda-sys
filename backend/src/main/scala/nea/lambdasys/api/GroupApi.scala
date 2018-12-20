@@ -2,8 +2,8 @@ package nea.lambdasys.api
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
-import nea.lambdasys.model.{DeclarationStructure, Group, List, StudentSummaryOnClasses, TutorViewOfStudent}
-import nea.lambdasys.model.DeclarationStructure.{Node => DeclarationNode}
+import nea.lambdasys.api.model.{DeclarationDegree, DeclarationStructure, Group, List, StudentSummaryOnClasses, TutorViewOfStudent}
+import nea.lambdasys.api.model.DeclarationStructure.{Node => DeclarationNode}
 import spray.json.DefaultJsonProtocol._
 
 import scala.util.Random
@@ -51,16 +51,12 @@ class GroupApi extends Directives with SprayJsonSupport {
   def randomizeDeclaration(declarationStructure: DeclarationStructure): DeclarationStructure = {
     def aux(node: DeclarationNode): DeclarationNode =
       if (node.children.isEmpty) {
-        val isDeclared = Seq("not", "fully")(Random.nextInt(2))
-        node.copy(isDeclared = isDeclared, isChecked = if (isDeclared != "not") Some(Random.nextBoolean()) else Some(false))
+        val isDeclared = Seq(DeclarationDegree.Not, DeclarationDegree.Fully)(Random.nextInt(2))
+        node.copy(isDeclared = isDeclared, isChecked = if (isDeclared != DeclarationDegree.Not) Some(Random.nextBoolean()) else Some(false))
       }
       else {
         val children = node.children.map(aux)
-        val isDeclared = children.map(_.isDeclared).reduce((d0, d1) => (d0, d1) match {
-          case ("not", "not") => "not"
-          case ("fully", "fully") => "fully"
-          case _ => "partially"
-        })
+        val isDeclared = children.map(_.isDeclared).reduce(_ | _)
         val isChecked = children.map(_.isChecked.get).reduce(_ || _)
 
         node.copy(children = children, isDeclared = isDeclared, isChecked = Some(isChecked))
