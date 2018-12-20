@@ -12,7 +12,8 @@ class PageContainer extends Component {
         return (
             <div className={"pageContainer"}>
                 <div className={"pageHeader"}>
-                    <HeaderContainer account={this.props.account}/>
+                    <HeaderContainer account={this.props.account}
+                                     logOut={this.props.logOut}  />
                 </div>
                 <div className={"pageContent"}>
                     <ContentContainer account={this.props.account}
@@ -26,7 +27,8 @@ class PageContainer extends Component {
                                       getGroupsListsData={this.props.getGroupsListsData}
                                       getGroupsStudentsData={this.props.getGroupsStudentsData}
                                       getGroupsListSummary={this.props.getGroupsListSummary}
-                                      getStudentProgress={this.props.getStudentProgress}/>
+                                      getStudentProgress={this.props.getStudentProgress}
+                                      logAsSupervisor={this.props.logAsSupervisor} />
                 </div>
             </div>
         );
@@ -51,7 +53,9 @@ const mapDispatchToProps = dispatch => {
         getGroupsListsData: Actions.getGroupsListsData.withDispatch(dispatch),
         getGroupsStudentsData: Actions.getGroupsStudentsData.withDispatch(dispatch),
         getGroupsListSummary: Actions.getGroupsListSummary.withDispatch(dispatch),
-        getStudentProgress: Actions.getStudentProgress.withDispatch(dispatch)
+        getStudentProgress: Actions.getStudentProgress.withDispatch(dispatch),
+        logAsSupervisor: Actions.logAsSupervisor.withDispatch(dispatch),
+        logOut: Actions.logOut.withDispatch(dispatch)
     }
 };
 

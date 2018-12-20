@@ -22,7 +22,9 @@ class ContentContainer extends React.Component {
             <Switch>
                 <Redirect exact from="/" to="/home"/>
                 <Route exact path="/home" render={() => <HomeMessageComponent isLogged={this.props.account}/>}/>
-                <Route exact path="/login" render={() => <LoginComponent getAccountData={this.props.getAccountData}/>}/>
+                <Route exact path="/login" render={() =>
+                    <LoginComponent getAccountData={this.props.getAccountData}
+                                    logAsSupervisor={this.props.logAsSupervisor}/>}/>
                 <Route exact path="/commentOptions" component={CommentOptionsComponent}/>
                 <Route exact path="/comment" component={CommentComponent}/>
                 <Route exact path="/declarations"
@@ -31,9 +33,9 @@ class ContentContainer extends React.Component {
                        }/>
                 <Route exact path="/declare/:classesId"
                        render={(props) =>
-                           (<DeclareComponent classesId={props.match.params.classesId}
+                           (<DeclareComponent classesId={+props.match.params.classesId}
                                               structure={this.props.declarations
-                                                  .find(d => d.classesId === props.match.params.classesId).structure}
+                                                  .find(d => d.classesId === +props.match.params.classesId).structure}
                                               getDeclarationStructureData={this.props.getDeclarationStructureData}/>)}/>
                 <Route exact path="/settings" render={() => <SettingsComponent account={this.props.account}/>}/>
                 <Route exact path="/groups" render={() =>

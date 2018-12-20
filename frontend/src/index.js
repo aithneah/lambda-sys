@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga'
@@ -12,9 +11,13 @@ import {rootSaga} from "./store/sagas/rootSaga";
 import declarationsReducer from "./store/reducers/declarationsReducer";
 import groupsReducer from "./store/reducers/groupsReducer";
 import studentsReducer from "./store/reducers/studentsReducer";
+import {connectRouter, routerMiddleware, ConnectedRouter} from 'connected-react-router';
+import {createBrowserHistory} from 'history';
 
+const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
+    router: connectRouter(history),
     account: accountReducer,
     declarations: declarationsReducer,
     groups: groupsReducer,
@@ -24,16 +27,16 @@ const rootReducer = combineReducers({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(routerMiddleware(history), sagaMiddleware)));
 
 sagaMiddleware.run(rootSaga);
 
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
             <App/>
-        </BrowserRouter>
+        </ConnectedRouter>
     </Provider>
 );
 

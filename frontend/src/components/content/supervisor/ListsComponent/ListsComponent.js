@@ -1,16 +1,23 @@
 import React, {Component} from 'react';
 import './ListsComponent.scss';
+import {message} from 'antd';
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import ButtonComponent from '../../../shared/ButtonComponent/ButtonComponent';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import {withRouter} from "react-router-dom";
 
 const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    const result = [...list];
+    const el = result[startIndex];
+    const step = Math.sign(endIndex - startIndex);
 
-    return result;
+    for (let i = startIndex; i < endIndex; i += step)
+        result[i] = result[i + step]
+
+    result[endIndex] = el;
+    let alertMessage = 'Zmieniono kolejność listy ' + (startIndex + 1);
+    message.success(alertMessage);
+    return result.map((e, i) => ({...e, id: i + 1}));
 };
 
 const grid = 8;
@@ -39,15 +46,8 @@ class ListsComponent extends Component {
         super(props);
         this.state = {
             lists: Array.from({ length: 10 }, (v, k) => k).map(k => ({
-                id: `Lista-${k + 1}`,
-                content: <div className="listsComponentItemStyle">
-                    <div className="listsComponentItemStyleTitle">Lista {k + 1}</div>
-                    <div className="listsComponentItemStyleButtons">
-                        <ButtonComponent title="Edytuj listę" type="buttonGreen" fontsize="2.5vh" onClick={() => this.props.history.push("/lists/" + (k + 1))}/>
-                        <ButtonComponent title="Usuń listę" type="buttonRed" fontsize="2.5vh"/>
-                    </div>
-                </div>,
-            }))
+                id: k + 1}
+            ))
         };
         this.onDragEnd = this.onDragEnd.bind(this);
     }
@@ -70,6 +70,8 @@ class ListsComponent extends Component {
     }
 
     render() {
+        console.log('render');
+        console.log(this.state.lists);
         return <RectangularContainer title="Zarządzaj listami zadań"
                                      icon="ordered-list"
                                      buttons={() => <>
@@ -97,7 +99,13 @@ class ListsComponent extends Component {
                                                 provided.draggableProps.style
                                             )}
                                         >
-                                            {list.content}
+                                            <div className="listsComponentItemStyle">
+                                                <div className="listsComponentItemStyleTitle">Lista {list.id}</div>
+                                                <div className="listsComponentItemStyleButtons">
+                                                    <ButtonComponent title="Edytuj listę" type="buttonGreen" fontsize="2.5vh" onClick={() => this.props.history.push("/lists/" + list.id)}/>
+                                                    <ButtonComponent title="Usuń listę" type="buttonRed" fontsize="2.5vh"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </Draggable>

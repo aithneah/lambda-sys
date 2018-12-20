@@ -3,6 +3,7 @@ import './DeclareComponent.scss';
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import {Checkbox} from 'antd';
 import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
+import {withRouter} from "react-router-dom";
 
 class DeclareComponent extends Component {
 
@@ -82,10 +83,10 @@ class DeclareComponent extends Component {
             {this.state.structure && this.state.structure.map(list => this.renderStructureNode(list))}
 
             <div className="declareComponentButtons">
-                <ButtonComponent title="Wypełnij" type="buttonGradient" fontsize="2.5vh"/>
+                <ButtonComponent title="Wypełnij" type="buttonGradient" fontsize="2.5vh" onClick={() => this.props.history.push("/declarations")}/>
             </div>
         </RectangularContainer>
     }
 };
 
-export default DeclareComponent;
+export default withRouter(DeclareComponent);

@@ -18,7 +18,7 @@ class HttpService(config: HttpServiceConfig)
                   materializer: Materializer,
                   ec: ExecutionContext) extends Directives with CorsDirectives {
 
-//  private val accountApi = new AccountApi()
+  private val accountApi = new AccountApi()
   private val declarationApi = new DeclarationApi(declarations)
   private val groupApi = new GroupApi()
   private val studentApi = new StudentApi(declarationApi)
@@ -30,7 +30,7 @@ class HttpService(config: HttpServiceConfig)
 
   val route: Route = (cors() & logRequest(requestLog _) & pathPrefix("api")) {
     concat(
-//      accountApi.route,
+      accountApi.route,
       groupApi.route,
       studentApi.route
     )

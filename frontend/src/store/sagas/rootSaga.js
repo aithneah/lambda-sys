@@ -8,6 +8,7 @@ import {getGroupsListsData} from "./getGroupsListsDataSaga";
 import {getGroupsStudentsData} from "./getGroupsStudentsDataSaga";
 import {getGroupsListSummary} from "./getGroupsListSummarySaga";
 import {getStudentProgress} from "./getStudentProgressSaga";
+import {logOut} from "./logOutSaga"
 
 export function* rootSaga() {
     yield takeEvery(Actions.getAccountData.Type, getAccountData);
@@ -18,4 +19,5 @@ export function* rootSaga() {
     yield takeEvery(Actions.getGroupsStudentsData.Type, getGroupsStudentsData);
     yield takeEvery(Actions.getGroupsListSummary.Type, getGroupsListSummary);
     yield takeEvery(Actions.getStudentProgress.Type, getStudentProgress);
+    yield takeEvery(Actions.logOut.Type, logOut);
 }

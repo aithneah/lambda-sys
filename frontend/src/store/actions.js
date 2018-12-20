@@ -21,6 +21,8 @@ const Actions = makeActions({
 
     setAccountData: (index, name, course) => ({ index, name, course }),
 
+    logAsSupervisor: Empty,
+
     getAllDeclarationsData: Empty,
 
     setDeclarationsData: lists => ({ lists}),
@@ -47,7 +49,17 @@ const Actions = makeActions({
 
     getStudentProgress: (studentId) => ({ studentId }),
 
-    setStudentProgress: (studentId, studentProgress) => ({ studentId, studentProgress })
+    setStudentProgress: (studentId, studentProgress) => ({ studentId, studentProgress }),
+
+    logOut: Empty,
+
+    clearAccounts: Empty,
+
+    clearDeclarations: Empty,
+
+    clearGroups: Empty,
+
+    clearStudents: Empty
 });
 
 export default Actions;

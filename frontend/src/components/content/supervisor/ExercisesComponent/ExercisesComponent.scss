@@ -1,0 +1,24 @@
+@import "../../../../colors";
+
+.exercisesComponentItemStyle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vh;
+}
+
+.exercisesComponentItemStyle:hover {
+  background-color: $hoveredItemBackground;
+  border-radius: 1vh;
+}
+
+.exercisesComponentItemStyleTitle {
+  font-size: 2.3vh;
+  font-weight: bold;
+}
+
+.exercisesComponentItemStyleButtons {
+  display: flex;
+  flex-direction: row;
+}

@@ -18,6 +18,8 @@ const groupsReducer = (state = initialState, action) => {
             return [...state
                 .map(group => group.id === action.groupId ?
                 {...group, summary: action.summary} : group)];
+        case Actions.clearGroups.Type:
+            return initialState;
         default:
             return state;
     }

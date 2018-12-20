@@ -10,6 +10,8 @@ const declarationsReducer = (state = initialState, action) => {
             return [...state
                 .map(declaration => declaration.classesId === action.classesId ?
                     {...declaration, structure: action.structure} : declaration)];
+        case Actions.clearDeclarations.Type:
+            return initialState;
         default:
             return state;
     }

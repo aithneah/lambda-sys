@@ -13,7 +13,10 @@ const TopBarComponent = props => {
           <ButtonComponent title={props.isLogged ? 'Wyloguj' : 'Zaloguj'}
                            type="buttonWhite"
                            fontsize="2.5vh"
-                           onClick={() => props.history.push("/login")}/>
+                           onClick={() => {
+                               props.isLogged ? props.logOut() :
+                               props.history.push("/login");
+                           }}/>
       </div>
   );
 };
