@@ -28,7 +28,8 @@ class PageContainer extends Component {
                                       getGroupsStudentsData={this.props.getGroupsStudentsData}
                                       getGroupsListSummary={this.props.getGroupsListSummary}
                                       getStudentProgress={this.props.getStudentProgress}
-                                      logAsSupervisor={this.props.logAsSupervisor} />
+                                      logAsSupervisor={this.props.logAsSupervisor}
+                                      updateDeclaration={this.props.updateDeclaration}  />
                 </div>
             </div>
         );
@@ -55,7 +56,8 @@ const mapDispatchToProps = dispatch => {
         getGroupsListSummary: Actions.getGroupsListSummary.withDispatch(dispatch),
         getStudentProgress: Actions.getStudentProgress.withDispatch(dispatch),
         logAsSupervisor: Actions.logAsSupervisor.withDispatch(dispatch),
-        logOut: Actions.logOut.withDispatch(dispatch)
+        logOut: Actions.logOut.withDispatch(dispatch),
+        updateDeclaration: Actions.updateDeclaration.withDispatch(dispatch)
     }
 };
 

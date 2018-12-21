@@ -1,10 +1,13 @@
 package nea.lambdasys.api
 
+import java.time.LocalDateTime
+
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
 import nea.lambdasys.api.model.{DeclarationDegree, DeclarationStructure, StudentViewOfDeclaration}
 import nea.lambdasys.core.DeclarationManager
-import nea.lambdasys.core.domain.{Assignment, Exercise}
+import nea.lambdasys.core.domain.{Assignment, Exercise, ExerciseType}
+import nea.lambdasys.core.{domain => cdm}
 import spray.json.DefaultJsonProtocol
 
 import scala.async.Async._
@@ -23,6 +26,9 @@ class DeclarationApi(declarations: DeclarationManager)
       (get & path(IntNumber / "structure")) {
         classesId => complete(getDeclarationStructure(studentIndex, classesId))
       },
+      (post & path(IntNumber / "structure") & entity(as[DeclarationStructure])) {
+        (classesId, declarationStructure) => complete(updateDeclaration(studentIndex, classesId, declarationStructure))
+      }
     )
   }
 
@@ -33,7 +39,7 @@ class DeclarationApi(declarations: DeclarationManager)
       StudentViewOfDeclaration(
         lists = declaration.assignments.map(_.name),
         classesId = declaration.classesId,
-        classesDate = "NOT IMPLEMENTED",
+        classesDate = LocalDateTime.now().toString,
         completionDate = declaration.submitted.map(_.toString)
       )
     }
@@ -41,37 +47,79 @@ class DeclarationApi(declarations: DeclarationManager)
 
   import DeclarationStructure.{Node => DeclarationNode}
 
+  def makeExerciseNode(exercise: cdm.Exercise): DeclarationNode = {
+    val children = exercise.children.map(makeExerciseNode)
+    val declarationDegree = children
+      .map(_.isDeclared)
+      .reduceOption(_ | _)
+      .getOrElse(DeclarationDegree.fromBoolean(exercise.isDeclared))
+
+    DeclarationNode(
+      id = exercise.id,
+      name = exercise.name,
+      `type` = exercise.`type`.toString.toLowerCase,
+      isDeclared = declarationDegree,
+      None,
+      children: _*
+    )
+  }
+
+  def makeAssignmentNode(assignment: cdm.Assignment): DeclarationNode = {
+    val children = assignment.exercises.map(makeExerciseNode)
+    val declarationDegree = children.map(_.isDeclared).reduceOption(_ | _).getOrElse(DeclarationDegree.Not)
+
+    DeclarationNode(
+      id = assignment.id,
+      name = assignment.name,
+      `type` = "list",
+      isDeclared = declarationDegree,
+      None,
+      children: _*
+    )
+  }
+
   def getDeclarationStructure(studentIndex: String, classesId: Int): Future[DeclarationStructure] = async {
     val declaration = await(declarations.getDeclaration(studentIndex, classesId))
-
-    def makeExerciseNode(exercise: Exercise): DeclarationNode = {
-      val children = exercise.children.map(makeExerciseNode)
-      val declarationDegree = children.foldLeft(DeclarationDegree.fromBoolean(exercise.isDeclared))(_ | _.isDeclared)
-
-      DeclarationNode(
-        name = exercise.name,
-        `type` = exercise.`type`.toString.toLowerCase,
-        isDeclared = declarationDegree,
-        None,
-        children: _*
-      )
-    }
-
-    def makeAssignmentNode(assignment: Assignment): DeclarationNode = {
-      val children = assignment.exercises.map(makeExerciseNode)
-      val declarationDegree = children.map(_.isDeclared).reduceOption(_ | _).getOrElse(DeclarationDegree.Not)
-
-      DeclarationNode(
-        name = assignment.name,
-        `type` = "list",
-        isDeclared = declarationDegree,
-        None,
-        children: _*
-      )
-    }
 
     DeclarationStructure(
       declaration.get.assignments.map(makeAssignmentNode): _*
     )
+  }
+
+  def updateDeclaration(studentIndex: String,
+                        classesId: Int,
+                        declarationStructure: DeclarationStructure): Future[String] = async {
+
+    def extractExercise(node: DeclarationNode): cdm.Exercise =
+      cdm.Exercise(
+        id = node.id,
+        name = node.name,
+        ordinalNumber = 0,
+        `type` = ExerciseType.fromString(node.`type`.capitalize).get,
+        isDeclared = node.isDeclared.toBoolean,
+        contents = None,
+        children = node.children.map(extractExercise)
+      )
+
+    def extractAssignment(node: DeclarationNode): cdm.Assignment =
+      cdm.Assignment(
+        id = node.id,
+        ordinalNumber = 0,
+        name = node.name,
+        exercises = node.children.map(extractExercise)
+      )
+
+    val declaration = cdm.Declaration(
+      id = None,
+      studentIndex,
+      classesId,
+      None,
+      false,
+      assignments = declarationStructure.structure.map(extractAssignment)
+    )
+
+    await(declarations.updateDeclaration(studentIndex, classesId, declaration))
+
+    ""
   }
 }

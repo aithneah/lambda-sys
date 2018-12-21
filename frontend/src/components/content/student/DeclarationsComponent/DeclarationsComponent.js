@@ -60,9 +60,9 @@ class DeclarationsComponent extends Component {
                                         new Date(declaration.completionDate).toLocaleString(locale, this.dateOptions) : "-"}</td>
                                     <td className="declarationsTableTDButtons">
                                         <ButtonComponent
-                                            title={declaration.completionDate ? "Wypełniono" : "Wypełnij"}
-                                            type={declaration.completionDate ? "buttonGray" : "buttonGradient"}
-                                            onClick={declaration.completionDate ? null : () => this.props.history.push(`/declare/${declaration.classesId}`)}
+                                            title={"Wypełnij"}
+                                            type={"buttonGradient"}
+                                            onClick={() => this.props.history.push(`/declare/${declaration.classesId}`)}
                                             fontsize="2vh"/></td>
                                 </tr>;
                             }

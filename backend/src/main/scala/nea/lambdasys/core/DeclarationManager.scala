@@ -1,6 +1,9 @@
 package nea.lambdasys.core
 
+import java.time.LocalDateTime
+
 import nea.lambdasys.core.domain.{Assignment, Declaration, Exercise}
+import nea.lambdasys.db.tables.DeclaredExercises
 import nea.lambdasys.db.{LambdaDb, model => dbm}
 
 import scala.async.Async._
@@ -55,5 +58,21 @@ class DeclarationManager(db: LambdaDb) {
     val studentsClasses = await(db.getClassesByStudent(studentIndex))
 
     await(Future.sequence(studentsClasses.map(c => getDeclaration(studentIndex, c.id.get)))).flatten
+  }
+
+  private def extractDeclaredExercises(assignment: Assignment): Seq[Exercise] = {
+
+    def extractFromChild(exercise: Exercise): Seq[Exercise] =
+      if (exercise.children.isEmpty && exercise.isDeclared) Seq(exercise)
+      else exercise.children.flatMap(extractFromChild)
+
+    assignment.exercises.flatMap(extractFromChild)
+  }
+
+  def updateDeclaration(studentIndex: String, classesId: Int, declaration: Declaration)
+                       (implicit ec: ExecutionContext): Future[Unit] = async {
+    val declaredExercises = declaration.assignments.flatMap(extractDeclaredExercises _)
+
+    await(db.createOrUpdateDeclaration(studentIndex, classesId, LocalDateTime.now(), declaredExercises.map(_.id)))
   }
 }

@@ -36,7 +36,8 @@ class ContentContainer extends React.Component {
                            (<DeclareComponent classesId={+props.match.params.classesId}
                                               structure={this.props.declarations
                                                   .find(d => d.classesId === +props.match.params.classesId).structure}
-                                              getDeclarationStructureData={this.props.getDeclarationStructureData}/>)}/>
+                                              getDeclarationStructureData={this.props.getDeclarationStructureData}
+                                              updateDeclaration={this.props.updateDeclaration}  />)}/>
                 <Route exact path="/settings" render={() => <SettingsComponent account={this.props.account}/>}/>
                 <Route exact path="/groups" render={() =>
                     <GroupsComponent groups={this.props.groups}
@@ -53,7 +54,7 @@ class ContentContainer extends React.Component {
                 />
                 <Route exact path="/groups/:groupId/lists/:listId/summary" render={(props) =>
                     <ListProgressComponent groupId={props.match.params.groupId}
-                                           listId={props.match.params.listId}
+                                           listId={+props.match.params.listId}
                                            getGroupsListSummary={this.props.getGroupsListSummary}
                                            group={this.props.groups.find(group =>
                                                group.id === props.match.params.groupId)}/>}/>

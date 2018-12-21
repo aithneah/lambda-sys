@@ -59,7 +59,9 @@ const Actions = makeActions({
 
     clearGroups: Empty,
 
-    clearStudents: Empty
+    clearStudents: Empty,
+
+    updateDeclaration: (classesId, declarationStructure) => ({ classesId, declarationStructure })
 });
 
 export default Actions;

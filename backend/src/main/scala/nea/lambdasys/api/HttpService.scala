@@ -8,26 +8,27 @@ import akka.http.scaladsl.server.directives.LogEntry
 import akka.http.scaladsl.server.{Directives, Route}
 import akka.stream.Materializer
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
-import nea.lambdasys.core.{DeclarationManager, GroupManager, StudentManager}
+import nea.lambdasys.core.{ClassesManager, DeclarationManager, GroupManager, StudentManager}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class HttpService(config: HttpServiceConfig)
                  (declarations: DeclarationManager,
                   groups: GroupManager,
-                  students: StudentManager)
+                  students: StudentManager,
+                  classesManager: ClassesManager)
                  (implicit system: ActorSystem,
                   materializer: Materializer,
                   ec: ExecutionContext) extends Directives with CorsDirectives {
 
   private val accountApi = new AccountApi(students, groups)
   private val declarationApi = new DeclarationApi(declarations)
-  private val groupApi = new GroupApi(students, groups)
-  private val studentApi = new StudentApi(students, declarationApi)
+  private val groupApi = new GroupApi(students, groups, classesManager, declarations, declarationApi)
+  private val studentApi = new StudentApi(students, declarations, declarationApi)
 
   def requestLog(request: HttpRequest): LogEntry =
     LogEntry(s"Incoming request ${request.method.value} -> " +
-      s"${request.uri.path}${request.uri.rawQueryString.getOrElse("")}",
+      s"${request.uri.path}${request.uri.rawQueryString.getOrElse("")}\n${request.entity}",
       Logging.InfoLevel)
 
   val route: Route = (cors() & logRequest(requestLog _) & pathPrefix("api")) {

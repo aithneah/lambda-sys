@@ -11,6 +11,12 @@ sealed trait DeclarationDegree {
     case (Not, Not) => Not
     case _ => Partially
   }
+
+  def toBoolean: Boolean = this match {
+    case Fully => true
+    case Partially => false
+    case Not => false
+  }
 }
 
 object DeclarationDegree {

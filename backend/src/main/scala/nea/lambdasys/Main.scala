@@ -4,9 +4,10 @@ import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import com.typesafe.config.ConfigFactory
 import nea.lambdasys.api.HttpService
-import nea.lambdasys.core.{DeclarationManager, GroupManager, StudentManager}
+import nea.lambdasys.core.{ClassesManager, DeclarationManager, GroupManager, StudentManager}
 import nea.lambdasys.db.LambdaDb
 
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 object Main {
@@ -17,7 +18,7 @@ object Main {
     implicit val system: ActorSystem = ActorSystem("my-system")
     implicit val materializer: Materializer = ActorMaterializer()
 
-    import system.dispatcher
+    implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.global
 
     val db = new LambdaDb(config.dbConfig)
 
@@ -35,11 +36,13 @@ object Main {
     val declarationManager = new DeclarationManager(db)
     val groupManager = new GroupManager(db)
     val studentManager = new StudentManager(db)
+    val classesManager = new ClassesManager(db)
 
     val httpService = new HttpService(config.httpServiceConfig)(
       declarationManager,
       groupManager,
-      studentManager
+      studentManager,
+      classesManager
     )
 
     httpService.start()

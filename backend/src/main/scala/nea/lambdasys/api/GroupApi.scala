@@ -1,14 +1,12 @@
 package nea.lambdasys.api
 
-import java.time.format.{DateTimeFormatter, TextStyle}
-import java.util.Locale
+import java.time.LocalDateTime
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
-import nea.lambdasys.api.model.{DeclarationDegree, DeclarationStructure, Group, List, StudentSummaryOnClasses, TutorViewOfStudent}
 import nea.lambdasys.api.model.DeclarationStructure.{Node => DeclarationNode}
-import nea.lambdasys.core.{GroupManager, StudentManager}
-import nea.lambdasys.core.domain.WeekParity
+import nea.lambdasys.api.model._
+import nea.lambdasys.core.{ClassesManager, DeclarationManager, GroupManager, StudentManager}
 import spray.json.DefaultJsonProtocol._
 
 import scala.async.Async._
@@ -16,7 +14,10 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 class GroupApi(students: StudentManager,
-               groups: GroupManager)
+               groups: GroupManager,
+               classes: ClassesManager,
+               declarations: DeclarationManager,
+               declarationApi: DeclarationApi)
               (implicit ec: ExecutionContext) extends Directives
   with SprayJsonSupport {
 
@@ -31,24 +32,11 @@ class GroupApi(students: StudentManager,
       (get & path(Segment / "lists")) { groupId =>
         complete(getAllGroupsLists(groupId))
       },
-      (get & path(Segment / "lists" / Segment / "summary")) { (groupId, listId) =>
+      (get & path(Segment / "lists" / IntNumber / "summary")) { (groupId, listId) =>
         complete(getSummaryFor(groupId, listId))
       }
     )
   }
-
-  def structure(list1: Int, list2: Int): DeclarationStructure = DeclarationStructure(
-    DeclarationNode("Lista " + list1, "list",
-      DeclarationNode("Zadanie 1", "exercise",
-        DeclarationNode("Podpunkt A", "subpoint",
-          DeclarationNode("Scala", "lang"),
-          DeclarationNode("OCaml", "lang")),
-        DeclarationNode("Podpunkt B", "subpoint")),
-      DeclarationNode("Zadanie 2", "exercise")),
-    DeclarationNode("Lista " + list2, "list",
-      DeclarationNode("Zadanie 1", "exercise",
-        DeclarationNode("Scala", "lang"),
-        DeclarationNode("OCaml", "lang"))))
 
   def randomizeDeclaration(declarationStructure: DeclarationStructure): DeclarationStructure = {
     def aux(node: DeclarationNode): DeclarationNode =
@@ -87,23 +75,34 @@ class GroupApi(students: StudentManager,
       }
   }
 
-  def getAllGroupsLists(id: String): Seq[List] = Seq(
-    List("01", "Lista 1", "2018-10-01T15:15:00", 15),
-    List("02", "Lista 2", "2018-10-08T15:15:00", 18),
-    List("03", "Lista 3", "2018-10-15T15:15:00", 16),
-    List("04", "Lista 4", "2018-10-22T15:15:00", 18),
-    List("05", "Lista 5", "2018-10-29T15:15:00", 18),
-  )
+  def getAllGroupsLists(id: String)(implicit ec: ExecutionContext): Future[Seq[Assignment]] = async {
+    val classesWithAssignments = await(classes.getClassesByGroup(id))
 
-  def getSummaryFor(groupId: String, listId: String): Future[Seq[StudentSummaryOnClasses]] = async {
-    val lid = listId.toInt
-    val (list1, list2) = ((lid - 1) / 2 * 2 + 1, (lid - 1) / 2 * 2 + 2)
+    for {
+      classes <- classesWithAssignments.sortBy(_.date.toEpochDay)
+      assignment <- classes.assignments.sortBy(_.ordinalNumber)
+    } yield Assignment(
+      id = assignment.id,
+      name = assignment.name,
+      classesDate = LocalDateTime.of(classes.date, classes.time).toString,
+      numberOfDeclarations = Random.nextInt(18)
+    )
+  }
 
-    await(getAllStudentsFromGroup(groupId)).map(student => StudentSummaryOnClasses(
+  def getSummaryFor(groupId: String, listId: Int): Future[Seq[StudentSummaryOnClasses]] = async {
+    val currentClasses = await(classes.getClassesByGroup(groupId))
+      .find(_.assignments.exists(_.id == listId)).get
+    val studentsFromGroup = await(getAllStudentsFromGroup(groupId))
+
+    await(Future.sequence(studentsFromGroup.map { student => async {
+      val declaration = await(declarations.getDeclaration(student.index, currentClasses.id)).get
+
+      StudentSummaryOnClasses(
         index = student.index,
         name = student.name,
         answersCount = Random.nextInt(4),
-        overallNote = "good",
-        declarationStructure = randomizeDeclaration(structure(list1, list2))))
+        overallNote = Seq("good", "neutral", "bad")(Random.nextInt(3)),
+        declarationStructure = DeclarationStructure(declaration.assignments.map(declarationApi.makeAssignmentNode): _*))
+    }}))
   }
 }

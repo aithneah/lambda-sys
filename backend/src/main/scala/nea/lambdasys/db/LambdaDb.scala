@@ -1,5 +1,7 @@
 package nea.lambdasys.db
 
+import java.time.LocalDateTime
+
 import com.typesafe.config.Config
 import nea.lambdasys.DbGenerator
 import nea.lambdasys.db.model._
@@ -79,6 +81,18 @@ class LambdaDb(config: Config) {
       (declaration, assignmentExercisePairs.groupByMappingValues(_._1, _._2).toSeq)
     }
 
+  def createOrUpdateDeclaration(studentIndex: String, classesId: Int, date: LocalDateTime, declaredExercises: Seq[Int])
+                               (implicit ec: ExecutionContext): Future[Unit] =
+    db.run {
+      for {
+        declaration <- (Declarations filter (d => d.classesId === classesId && d.studentIndex === studentIndex)).result.headOption
+        declaration <- declaration.map(DBIO.successful)
+          .getOrElse(Declarations.returning(Declarations) += Declaration(None, date, false, classesId, studentIndex))
+        _ <- (DeclaredExercises filter (_.declarationId === declaration.id)).delete
+        _ <- DeclaredExercises ++= declaredExercises.map(DeclaredExercise(None, declaration.id.get, _))
+      } yield ()
+    }
+
   def getClassesById(classesId: Int): Future[Option[Classes]] =
     db.run((Classess filter (_.id === classesId)).result.headOption)
 
@@ -111,4 +125,20 @@ class LambdaDb(config: Config) {
 
   def getStudentByIndex(index: String): Future[Option[(Student)]] =
     db.run((Students filter (_.index === index)).result.headOption)
+
+  def getClassesWithAssignmentsByGroup(groupId: String)
+                                      (implicit ec: ExecutionContext): Future[Seq[(Classes, Seq[Assignment])]] = async {
+    val classesAssignmentPairs = await(db.run {
+      (for {
+        classes <- Classess
+        if classes.groupId === groupId
+        classesAssignment <- ClassesAssignments
+        if classesAssignment.classesId === classes.id
+        assignment <- Assignments
+        if classesAssignment.assignmentId === assignment.id
+      } yield (classes, assignment)).result
+    })
+
+    classesAssignmentPairs.groupByMappingValues(_._1, _._2).toSeq
+  }
 }

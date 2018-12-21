@@ -83,7 +83,10 @@ class DeclareComponent extends Component {
             {this.state.structure && this.state.structure.map(list => this.renderStructureNode(list))}
 
             <div className="declareComponentButtons">
-                <ButtonComponent title="Wypełnij" type="buttonGradient" fontsize="2.5vh" onClick={() => this.props.history.push("/declarations")}/>
+                <ButtonComponent title="Wypełnij"
+                                 type="buttonGradient"
+                                 fontsize="2.5vh"
+                                 onClick={() => this.props.updateDeclaration(this.props.classesId, this.state.structure)}/>
             </div>
         </RectangularContainer>
     }

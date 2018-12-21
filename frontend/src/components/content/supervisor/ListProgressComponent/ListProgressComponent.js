@@ -41,6 +41,7 @@ class ListProgressComponent extends Component {
     };
 
     render() {
+        console.log(this.props.group);
         let currentListName = this.props.group.lists
             .find(list => list.id === this.props.listId).name;
 
