@@ -1,15 +1,24 @@
 package nea.lambdasys.api
 
+import java.time.format.{DateTimeFormatter, TextStyle}
+import java.util.Locale
+
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
 import nea.lambdasys.api.model.{DeclarationDegree, DeclarationStructure, Group, List, StudentSummaryOnClasses, TutorViewOfStudent}
 import nea.lambdasys.api.model.DeclarationStructure.{Node => DeclarationNode}
+import nea.lambdasys.core.{GroupManager, StudentManager}
+import nea.lambdasys.core.domain.WeekParity
 import spray.json.DefaultJsonProtocol._
 
+import scala.async.Async._
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
-
-class GroupApi extends Directives with SprayJsonSupport {
+class GroupApi(students: StudentManager,
+               groups: GroupManager)
+              (implicit ec: ExecutionContext) extends Directives
+  with SprayJsonSupport {
 
   val route: Route = pathPrefix("groups") {
     concat(
@@ -27,13 +36,6 @@ class GroupApi extends Directives with SprayJsonSupport {
       }
     )
   }
-
-  val students: Seq[TutorViewOfStudent] = Seq(
-    TutorViewOfStudent("228932", "Mariusz Kowalczyk"),
-    TutorViewOfStudent("226715", "Anna Misiałek"),
-    TutorViewOfStudent("216653", "Filip Nerta"),
-    TutorViewOfStudent("225699", "Grzegorz Wapienny"),
-  )
 
   def structure(list1: Int, list2: Int): DeclarationStructure = DeclarationStructure(
     DeclarationNode("Lista " + list1, "list",
@@ -65,13 +67,31 @@ class GroupApi extends Directives with SprayJsonSupport {
     DeclarationStructure(declarationStructure.structure.map(aux): _*)
   }
 
-  def getAllGroups(): Seq[Group] = Seq(
-    Group("1", "Poniedziałek, TP 11:15", 18),
-    Group("2", "Poniedziałek, TN 11:15", 16),
-    Group("3", "Wtorek, TP 13:15", 17),
-  )
+  def getAllGroups(): Future[Seq[Group]] = async {
+    await(groups.getGroups())
+      .sortBy(g => (g.dayOfWeek, g.classesTime, g.weekParity))
+      .map { g =>
+        val dayOfWeek = g.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("pl"))
+        val weekParity = g.weekParity match {
+          case WeekParity.Even => "TP"
+          case WeekParity.Odd => "TN"
+        }
+        val classesTime = g.classesTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
-  def getAllStudentsFromGroup(id: String): Seq[TutorViewOfStudent] = students
+        Group(g.id, s"$dayOfWeek, $weekParity $classesTime", g.studentIndexes.size)
+      }
+  }
+
+  def getAllStudentsFromGroup(groupId: String): Future[Seq[TutorViewOfStudent]] = async {
+    await(students.getStudentsByGroup(groupId))
+      .sortBy(s => (s.surname, s.name))
+      .map { student =>
+        TutorViewOfStudent(
+          index = student.index,
+          name = s"${student.name} ${student.surname}"
+        )
+      }
+  }
 
   def getAllGroupsLists(id: String): Seq[List] = Seq(
     List("01", "Lista 1", "2018-10-01T15:15:00", 15),
@@ -81,11 +101,11 @@ class GroupApi extends Directives with SprayJsonSupport {
     List("05", "Lista 5", "2018-10-29T15:15:00", 18),
   )
 
-  def getSummaryFor(groupId: String, listId: String): Seq[StudentSummaryOnClasses] = {
+  def getSummaryFor(groupId: String, listId: String): Future[Seq[StudentSummaryOnClasses]] = async {
     val lid = listId.toInt
     val (list1, list2) = ((lid - 1) / 2 * 2 + 1, (lid - 1) / 2 * 2 + 2)
 
-    students.map(student => StudentSummaryOnClasses(
+    await(getAllStudentsFromGroup(groupId)).map(student => StudentSummaryOnClasses(
         index = student.index,
         name = student.name,
         answersCount = Random.nextInt(4),

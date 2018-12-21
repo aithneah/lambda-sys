@@ -3,8 +3,7 @@ package nea.lambdasys.db
 import java.sql
 import java.time._
 
-import nea.lambdasys.core.domain.ExerciseType
-import nea.lambdasys.db.model.WeekParity
+import nea.lambdasys.core.domain.{ExerciseType, WeekParity}
 import slick.jdbc.PostgresProfile.api._
 
 trait ScalaTypesSupport {

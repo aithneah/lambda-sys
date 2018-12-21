@@ -3,7 +3,7 @@ package nea.lambdasys
 import java.time.temporal.WeekFields
 import java.time.{DayOfWeek, Duration, LocalDate, LocalTime}
 
-import nea.lambdasys.core.domain.ExerciseType
+import nea.lambdasys.core.domain.{ExerciseType, WeekParity}
 import nea.lambdasys.db.model._
 import nea.lambdasys.db.tables._
 import slick.jdbc.PostgresProfile.api._

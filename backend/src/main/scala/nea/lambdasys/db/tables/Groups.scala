@@ -2,10 +2,11 @@ package nea.lambdasys.db.tables
 
 import java.time.{DayOfWeek, LocalTime}
 
+import nea.lambdasys.core.domain.WeekParity
 import nea.lambdasys.db.ScalaTypesSupport
 
 //import nea.lambdasys.db.ScalaTypesSupport._
-import nea.lambdasys.db.model.{Group, WeekParity}
+import nea.lambdasys.db.model.Group
 import slick.jdbc.PostgresProfile.api._
 
 class Groups(tag: Tag) extends Table[Group](tag, "GROUPS")  with ScalaTypesSupport {

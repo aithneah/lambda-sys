@@ -1,10 +1,9 @@
-package nea.lambdasys.db.model
+package nea.lambdasys.core.domain
 
 import java.time.{DayOfWeek, LocalTime}
-
-import nea.lambdasys.core.domain.WeekParity
 
 case class Group(id: String,
                  dayOfWeek: DayOfWeek,
                  weekParity: WeekParity,
-                 classesTime: LocalTime)
+                 classesTime: LocalTime,
+                 studentIndexes: Seq[String])

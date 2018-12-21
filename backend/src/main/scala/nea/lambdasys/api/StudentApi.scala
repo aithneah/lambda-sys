@@ -3,9 +3,13 @@ package nea.lambdasys.api
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
 import nea.lambdasys.api.model.{DeclarationStructure, StudentOverallProgress}
+import nea.lambdasys.core.StudentManager
 import spray.json.DefaultJsonProtocol
 
-class StudentApi(declarationApi: DeclarationApi) extends Directives with SprayJsonSupport with DefaultJsonProtocol {
+class StudentApi(students: StudentManager,
+                 declarationApi: DeclarationApi) extends Directives
+  with SprayJsonSupport
+  with DefaultJsonProtocol {
 
   val route: Route = pathPrefix("students") {
       pathPrefix(Segment) { studentIndex =>

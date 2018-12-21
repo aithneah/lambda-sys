@@ -93,4 +93,19 @@ class LambdaDb(config: Config) {
         if classes.groupId === group.id
       } yield classes).result
     }
+
+  def getGroupsWithStudentIndexes()(implicit ec: ExecutionContext): Future[Seq[(Group, Seq[String])]] = async {
+    val groupStudentPairs = await(db.run {
+      (for {
+        group <- Groups
+        student <- Students
+        if student.groupId === group.id
+      } yield (group, student.index)).result
+    })
+
+    groupStudentPairs.groupByMappingValues(_._1, _._2).toSeq
+  }
+
+  def getStudentsByGroup(groupId: String): Future[Seq[Student]] =
+    db.run((Students filter (_.groupId === groupId)).result)
 }

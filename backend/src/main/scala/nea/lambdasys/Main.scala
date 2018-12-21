@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import com.typesafe.config.ConfigFactory
 import nea.lambdasys.api.HttpService
-import nea.lambdasys.core.DeclarationManager
+import nea.lambdasys.core.{DeclarationManager, GroupManager, StudentManager}
 import nea.lambdasys.db.LambdaDb
 
 import scala.util.{Failure, Success}
@@ -33,9 +33,13 @@ object Main {
     }
 
     val declarationManager = new DeclarationManager(db)
+    val groupManager = new GroupManager(db)
+    val studentManager = new StudentManager(db)
 
     val httpService = new HttpService(config.httpServiceConfig)(
-      declarationManager
+      declarationManager,
+      groupManager,
+      studentManager
     )
 
     httpService.start()
