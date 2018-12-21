@@ -20,7 +20,7 @@ class HttpService(config: HttpServiceConfig)
                   materializer: Materializer,
                   ec: ExecutionContext) extends Directives with CorsDirectives {
 
-  private val accountApi = new AccountApi()
+  private val accountApi = new AccountApi(students, groups)
   private val declarationApi = new DeclarationApi(declarations)
   private val groupApi = new GroupApi(students, groups)
   private val studentApi = new StudentApi(students, declarationApi)

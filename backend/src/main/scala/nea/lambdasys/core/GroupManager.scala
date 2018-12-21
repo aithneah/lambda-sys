@@ -21,4 +21,20 @@ class GroupManager(db: LambdaDb) {
       )
     }
   }
+
+  def getGroup(groupId: String)(implicit ec: ExecutionContext): Future[Option[Group]] = async {
+    val groupsWithStudentIndexes = await(db.getGroupsWithStudentIndexes())
+
+    groupsWithStudentIndexes
+      .map { case (group, indexes) =>
+        Group(
+          id = group.id,
+          dayOfWeek = group.dayOfWeek,
+          weekParity = group.weekParity,
+          classesTime = group.classesTime,
+          studentIndexes = indexes
+        )
+      }
+      .find(_.id == groupId)
+  }
 }

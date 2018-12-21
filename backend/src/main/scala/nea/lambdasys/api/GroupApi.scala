@@ -71,14 +71,8 @@ class GroupApi(students: StudentManager,
     await(groups.getGroups())
       .sortBy(g => (g.dayOfWeek, g.classesTime, g.weekParity))
       .map { g =>
-        val dayOfWeek = g.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("pl"))
-        val weekParity = g.weekParity match {
-          case WeekParity.Even => "TP"
-          case WeekParity.Odd => "TN"
-        }
-        val classesTime = g.classesTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
-        Group(g.id, s"$dayOfWeek, $weekParity $classesTime", g.studentIndexes.size)
+        Group(g.id, CustomFormats.formatClassesDate(g.dayOfWeek, g.weekParity, g.classesTime), g.studentIndexes.size)
       }
   }
 

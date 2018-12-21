@@ -108,4 +108,7 @@ class LambdaDb(config: Config) {
 
   def getStudentsByGroup(groupId: String): Future[Seq[Student]] =
     db.run((Students filter (_.groupId === groupId)).result)
+
+  def getStudentByIndex(index: String): Future[Option[(Student)]] =
+    db.run((Students filter (_.index === index)).result.headOption)
 }

@@ -18,4 +18,15 @@ class StudentManager(db: LambdaDb) {
       )
     }
   }
+
+  def getStudentByIndex(index: String)(implicit ec: ExecutionContext): Future[Option[Student]] = async {
+    await(db.getStudentByIndex(index)).map { student =>
+      Student(
+        index = student.index,
+        name = student.name,
+        surname = student.surname,
+        groupId = student.groupId
+      )
+    }
+  }
 }
