@@ -17,7 +17,7 @@ const Empty = () => ({});
 
 const Actions = makeActions({
 
-    getAccountData: Empty,
+    getAccountData: (index) => ({ index}),
 
     setAccountData: (index, name, course) => ({ index, name, course }),
 

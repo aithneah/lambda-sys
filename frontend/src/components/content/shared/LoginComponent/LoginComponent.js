@@ -17,11 +17,11 @@ class LoginComponent extends Component {
     render() {
 
         let logIn = () => {
-            if (this.state.login === "student") {
-                this.props.getAccountData();
-            } else if (this.state.login === "prowadzący") {
+            if (this.state.login === "prowadzący") {
                 this.props.logAsSupervisor();
                 this.props.history.push("/home");
+            } else if (this.state.login !== "") {
+                this.props.getAccountData(this.state.login);
             } else {
                 message.error('Niepoprawny login lub hasło');
             }

@@ -4,8 +4,8 @@ import Actions from "../actions";
 import {push} from 'connected-react-router'
 
 
-export function* getAccountData() {
-    let {data: account} = yield call(axios.get, "http://localhost:8000/api/accounts/123456");
+export function* getAccountData(action) {
+    let {data: account} = yield call(axios.get, "http://localhost:8000/api/accounts/" + action.index);
     yield put(Actions.setAccountData(account.index, account.name, account.course));
     yield put(push("/home"));
 }
