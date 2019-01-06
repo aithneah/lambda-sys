@@ -27,4 +27,22 @@ class CommentManager(db: LambdaDb) {
 
   def countCommentsByStudent(studentIndex: String): Future[Int] =
     db.countCommentsByStudent(studentIndex)
+
+  def getNotesByStudent(studentIndex: String)(implicit ec: ExecutionContext): Future[String] =
+    async {
+      val notes = await(db.getNotesByStudent(studentIndex))
+
+      val overallNote = if (notes.isEmpty) 0
+      else math.round(notes.map {
+        case "negative" => -1
+        case "positive" => 1
+        case _ => 0
+      }.sum / notes.length.toDouble).toInt
+
+      overallNote match {
+        case -1 => "negative"
+        case 1 => "positive"
+        case _ => "neutral"
+      }
+    }
 }

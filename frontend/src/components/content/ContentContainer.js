@@ -53,6 +53,7 @@ class ContentContainer extends React.Component {
                 <Route exact path="/groups/:groupId/lists/:listId/summary" render={(props) =>
                     <ListProgressComponent groupId={props.match.params.groupId}
                                            listId={+props.match.params.listId}
+                                           commentFromTile={this.props.commentFromTile}
                                            getGroupsListSummary={this.props.getGroupsListSummary}
                                            group={this.props.groups.find(group =>
                                                group.id === props.match.params.groupId)}/>}/>
@@ -62,6 +63,7 @@ class ContentContainer extends React.Component {
                                               student={this.props.student}/>}/>
                 <Route exact path="/students/:studentId/commentOptions" render={() =>
                     <CommentOptionsComponent student={this.props.student}
+                                             comment={this.props.comment}
                                              setCommentData={this.props.setCommentData}/>}/>
                 <Route exact path="/students/:studentId/comment"
                        render={() => <CommentComponent student={this.props.student}

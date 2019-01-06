@@ -12,8 +12,8 @@ class CommentOptionsComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chosenList: null,
-            chosenExercise: null,
+            chosenList: this.props.comment ? this.props.comment.list : null,
+            chosenExercise: this.props.comment ? this.props.comment.exercise : null,
             chosenSubpoint: null,
             chosenLang: null
         }
@@ -24,6 +24,7 @@ class CommentOptionsComponent extends Component {
         <div className="commentOptionsComponentForm">
             <div className="commentOptionsComponentFormSectionHorizontal"><span style={{marginRight: "2vw"}}>Wybierz listę:</span>
                 <Select className="commentOptionsComponentSelect"
+                        value={this.state.chosenList !== null ? this.state.chosenList : null}
                         onChange={(value) => this.setState({chosenList: value,
                             chosenExercise: null, chosenSubpoint: null, chosenLang: null})}>
                     {this.props.student.declarationStructure.structure.map((list, i) =>

@@ -101,7 +101,7 @@ class GroupApi(students: StudentManager,
         index = student.index,
         name = student.name,
         answersCount = await(comments.countCommentsByStudent(student.index)),
-        overallNote = Seq("good", "neutral", "bad")(Random.nextInt(3)),
+        overallNote = await(comments.getNotesByStudent(student.index)),
         declarationStructure = DeclarationStructure(declaration.assignments.map(declarationApi.makeAssignmentNode): _*))
     }}))
   }

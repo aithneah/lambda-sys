@@ -5,7 +5,8 @@ const ProgressChartComponent = (props) => {
 
     return <div className="progressChartComponentContainer">
         {props.percentage.map((p, i) => {
-            return <div className="progressChartElement" key={i + "p"}>
+            return <div className="progressChartElement" key={i + "p"}
+                        onClick={() => props.changeShowedList(i)}>
                 <div className="progressChartBar"
                      style={{
                          backgroundImage: "linear-gradient(to top, #99C2EE, #2EE7C5 "

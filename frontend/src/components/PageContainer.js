@@ -32,7 +32,8 @@ class PageContainer extends Component {
                                       logAsSupervisor={this.props.logAsSupervisor}
                                       updateDeclaration={this.props.updateDeclaration}
                                       setCommentData={this.props.setCommentData}
-                                      applyComment={this.props.applyComment}  />
+                                      applyComment={this.props.applyComment}
+                                      commentFromTile={this.props.commentFromTile}  />
                 </div>
             </div>
         );
@@ -63,7 +64,8 @@ const mapDispatchToProps = dispatch => {
         logOut: Actions.logOut.withDispatch(dispatch),
         updateDeclaration: Actions.updateDeclaration.withDispatch(dispatch),
         setCommentData: Actions.setCommentData.withDispatch(dispatch),
-        applyComment: Actions.applyComment.withDispatch(dispatch)
+        applyComment: Actions.applyComment.withDispatch(dispatch),
+        commentFromTile: Actions.commentFromTile.withDispatch(dispatch)
     }
 };
 

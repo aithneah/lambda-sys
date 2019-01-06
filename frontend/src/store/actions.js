@@ -65,7 +65,9 @@ const Actions = makeActions({
 
     setCommentData: (list, exercise, subpoint, lang) => ({ list, exercise, subpoint, lang }),
 
-    applyComment: (exerciseId, commentContent, note) => ({ exerciseId, commentContent, note })
+    applyComment: (exerciseId, commentContent, note) => ({ exerciseId, commentContent, note }),
+
+    commentFromTile: (studentIndex, listName, exerciseName, groupId) => ({ studentIndex, listName, exerciseName, groupId })
 });
 
 export default Actions;

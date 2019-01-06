@@ -184,6 +184,18 @@ class LambdaDb(config: Config) {
       } yield comment).length.result
     }
 
+  def getNotesByStudent(studentIndex: String): Future[Seq[String]] =
+    db.run {
+      (for {
+        comment <- Comments
+        declaredExercise <- DeclaredExercises
+        if comment.declaredExerciseId === declaredExercise.id
+        declaration <- Declarations
+        if declaration.id === declaredExercise.declarationId
+        if declaration.studentIndex === studentIndex
+      } yield comment.note).result
+    }
+
   def countDeclarationsByGroupAndAssignment(groupId: String, assignmentId: Int): Future[Int] =
     db.run {
       (for {

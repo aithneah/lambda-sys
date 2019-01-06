@@ -38,3 +38,13 @@
 .exercise-partially {
   background-image: linear-gradient(to right bottom, $gradientLight, $gradientMedium 49.9%, $exerciseTilesBackground 50%);
 }
+
+.exerciseTileCommentIconArea {
+  text-align: center;
+  margin-top: -0.5vh;
+}
+
+.exerciseTileCommentIcon {
+  font-size: 3.5vh;
+  color: white;
+}

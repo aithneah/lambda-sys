@@ -4,8 +4,8 @@ import ExerciseTileComponent from "../../../../../shared/ExerciseTileComponent/E
 
 const DeclarationOverviewComponent = (props) => {
     let buildPartialData = (node, path) => {
-        return node.note !== "" ?
-            [...path, node.name].join(" / ") + ": " + node.note + (node.comment !== "" ? (" - " + node.comment) : "") + "\n"
+        return node.note !== undefined ?
+            [...path, node.name].join(" / ") + ": " + node.note + (node.comment !== undefined ? (" - " + node.comment) : "") + "\n"
             + node.children.map((child) => buildPartialData(child, [...path, node.name]))
             : node.children.map((child) => buildPartialData(child, [...path, node.name]));
 
@@ -19,6 +19,7 @@ const DeclarationOverviewComponent = (props) => {
                     <div className="declarationOverviewExercise" key={exercise.id}>
                         <ExerciseTileComponent type={"exercise-" + exercise.isDeclared}
                                                tick={exercise.isChecked}
+                                               commentIcon={exercise.isChecked}
                                                popover={exercise.isChecked}
                                                exerciseDetails={buildPartialData(exercise, [])}/>
                     </div>)}

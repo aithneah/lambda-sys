@@ -81,6 +81,8 @@ class ListProgressComponent extends Component {
                                 .map((exercise, i) => <td key={"e" + i}>
                                     <ExerciseTileComponent type={"exercise-" + exercise.isDeclared}
                                                            tick={exercise.isChecked}
+                                                           commentIcon={false}
+                                                           onClick={() => this.props.commentFromTile(student.index, currentListName, exercise.name, this.props.groupId)}
                                                            popover={exercise.isDeclared === "partially"}
                                                            exerciseDetails={this.buildPartialData(exercise.children).join("\n")}/>
                                 </td>)}

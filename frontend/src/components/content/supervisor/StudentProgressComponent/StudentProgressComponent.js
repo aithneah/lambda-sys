@@ -8,12 +8,15 @@ import PercentageComponent from "./PercentageComponent/PercentageComponent";
 import DeclarationsOverviewComponent from "./DeclarationsOverviewComponent/DeclarationsOverviewComponent";
 import {Icon} from "antd";
 import {withRouter} from "react-router-dom";
+import DeclarationOverviewComponent
+    from "./DeclarationsOverviewComponent/DeclarationOverviewComponent/DeclarationOverviewComponent";
 
 class StudentProgressComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            showedList: null
         }
     }
 
@@ -36,6 +39,10 @@ class StudentProgressComponent extends Component {
             title={this.props.student ? this.props.student.name + " " + this.props.student.index : ""}
             icon="user"
             buttons={() => <>
+                <ButtonComponent title="Wszystkie listy"
+                                              type="buttonGradient"
+                                              fontsize="2.2vh"
+                                              onClick={() => this.setState({showedList: null})}/>
                 <ButtonComponent title="Pytaj"
                                  type="buttonGradient"
                                  fontsize="2.2vh"
@@ -49,6 +56,7 @@ class StudentProgressComponent extends Component {
                         <div className="studentProgressChart">
                             <div className="studentProgressSectionTitle">Poziom ukończenia każdej listy zadań:</div>
                             <ProgressChartComponent
+                                changeShowedList={(index) => this.setState({showedList: index})}
                                 percentage={this.props.student ? this.props.student.listsPercentage : []}/>
                         </div>
                         <div className="studentProgressPercentageAndAverage">
@@ -67,8 +75,14 @@ class StudentProgressComponent extends Component {
                         </div>
                     </div>
                     <div className="studentProgressDeclarations">
-                        <DeclarationsOverviewComponent
+                        {this.state.showedList === null ? <DeclarationsOverviewComponent
                             lists={this.props.student ? this.props.student.declarationStructure.structure : null}/>
+                            : <DeclarationOverviewComponent exercises={this.props.student ?
+                                this.props.student.declarationStructure
+                                    .structure[this.state.showedList].children : null}
+                                                            listName={this.props.student ?
+                                                                this.props.student.declarationStructure
+                                                                    .structure[this.state.showedList].name : null} />}
                     </div>
                 </div>}
         </RectangularContainer>;
