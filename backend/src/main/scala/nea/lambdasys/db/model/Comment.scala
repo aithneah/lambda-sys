@@ -1,6 +1,5 @@
 package nea.lambdasys.db.model
 
-case class Comment(id: Option[Int],
-                   declaredExerciseId: Int,
+case class Comment(declaredExerciseId: Int,
                    commentContent: Option[String],
                    note: String)

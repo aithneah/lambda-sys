@@ -4,7 +4,7 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
 import nea.lambdasys.api.model.{Comment, DeclarationStructure, StudentOverallProgress}
 import nea.lambdasys.core.domain.{Assignment, Exercise}
-import nea.lambdasys.core.{DeclarationManager, StudentManager}
+import nea.lambdasys.core.{CommentManager, DeclarationManager, StudentManager}
 import spray.json.DefaultJsonProtocol
 
 import scala.async.Async._
@@ -12,6 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class StudentApi(students: StudentManager,
                  declarations: DeclarationManager,
+                 comments: CommentManager,
                  declarationApi: DeclarationApi)
                 (implicit ec: ExecutionContext) extends Directives
   with SprayJsonSupport
@@ -24,8 +25,8 @@ class StudentApi(students: StudentManager,
         (get & pathEnd) {
           complete(getStudentOverallProgress(studentIndex))
         },
-        (post & path(Segment / "comment") & entity(as[Comment])) { (index, comment) =>
-          onComplete(applyComment(index, comment))(_ => complete(""))
+        (post & path("comment") & entity(as[Comment])) { comment =>
+          onComplete(applyComment(studentIndex, comment))(_ => complete(""))
         }
       )
     }
@@ -60,7 +61,6 @@ class StudentApi(students: StudentManager,
     assignment.exercises.map(exercise => countLeaves(exercise, _ => true)).sum.toDouble
   }
 
-  def applyComment(index: String, comment: Comment): Future[Unit] = {
-    ???
-  }
+  def applyComment(index: String, comment: Comment): Future[Unit] =
+    comments.updateOrCreateComment(index, comment)
 }

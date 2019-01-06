@@ -6,8 +6,8 @@ import com.typesafe.config.Config
 import nea.lambdasys.DbGenerator
 import nea.lambdasys.db.model._
 import nea.lambdasys.db.tables._
-import slick.jdbc.PostgresProfile.api._
 import nea.lambdasys.util.CollectionExtensions._
+import slick.jdbc.PostgresProfile.api._
 
 import scala.async.Async._
 import scala.concurrent.{ExecutionContext, Future}
@@ -142,4 +142,20 @@ class LambdaDb(config: Config) {
 
     classesAssignmentPairs.groupByMappingValues(_._1, _._2).toSeq
   }
+
+  def getDeclaredExereciseByStudentAndExercise(studentIndex: String, exerciseId: Int): Future[Option[DeclaredExercise]] =
+    db.run {
+      (for {
+        declaredExercise <- DeclaredExercises
+        if declaredExercise.exerciseId === exerciseId
+        declaration <- Declarations
+        if declaration.id === declaredExercise.declarationId &&
+          declaration.studentIndex === studentIndex
+      } yield declaredExercise).result.headOption
+    }
+
+  def updateOrCreateComment(comment: Comment): Future[Int] =
+    db.run {
+      Comments.insertOrUpdate(comment)
+    }
 }
