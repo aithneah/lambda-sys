@@ -15,19 +15,21 @@ class DeclarationManager(db: LambdaDb) {
     val exercisesByParent = exercises.groupBy { case (exercise, _, _) => exercise.parentId }
 
     def nestExercises(parentId: Option[Int]): Seq[Exercise] =
-      exercisesByParent.get(parentId).toSeq.flatten.map { case (exercise, declaredExercise, comment) =>
-        Exercise(
-          id = exercise.id.get,
-          name = exercise.name,
-          ordinalNumber = exercise.ordinalNumber,
-          `type` = exercise.`type`,
-          isDeclared = declaredExercise.isDefined,
-          contents = exercise.contents,
-          children = nestExercises(Some(exercise.id.get)),
-          comment = comment.flatMap(_.commentContent),
-          note = comment.map(_.note)
-        )
-      }
+      exercisesByParent.get(parentId).toSeq.flatten
+        .map { case (exercise, declaredExercise, comment) =>
+          Exercise(
+            id = exercise.id.get,
+            name = exercise.name,
+            ordinalNumber = exercise.ordinalNumber,
+            `type` = exercise.`type`,
+            isDeclared = declaredExercise.isDefined,
+            contents = exercise.contents,
+            children = nestExercises(Some(exercise.id.get)),
+            comment = comment.flatMap(_.commentContent),
+            note = comment.map(_.note)
+          )
+        }
+        .sortBy(_.ordinalNumber)
 
     Assignment(
       id = assignment.id.get,

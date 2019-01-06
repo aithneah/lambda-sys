@@ -72,7 +72,7 @@ object DbGenerator {
     generateUniqueIndices().map(index => generateRandomStudent(index, availableGroups))
 
   private def generateClasses(group: Group): Seq[Classes] =
-    Stream.iterate(LocalDate.of(2018, 11, 15))(date => date.plusDays(1))
+    Stream.iterate(LocalDate.of(2018, 11, 12))(date => date.plusDays(1))
       .takeWhile(date => date.isBefore(LocalDate.of(2019, 2, 1)))
       .filter(date => date.getDayOfWeek == group.dayOfWeek)
       .filter(date => date.get(WeekFields.ISO.weekOfWeekBasedYear()) % 2 == group.weekParity.toInt)
