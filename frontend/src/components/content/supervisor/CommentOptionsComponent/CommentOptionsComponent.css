@@ -8,12 +8,17 @@
 
 .commentOptionsComponentSelect {
     width: 15vw;
+    margin-left: 1vw;
 }
 
 .commentOptionsComponentFormSectionVertical {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.commentOptionsComponentFormSectionVerticalRadioGroup {
+text-align: center;
 }
 
 .commentOptionsComponentFormSectionHorizontal {

@@ -20,6 +20,7 @@ class PageContainer extends Component {
                                       groups={this.props.groups}
                                       declarations={this.props.declarations}
                                       student={this.props.student}
+                                      comment={this.props.comment}
                                       getAccountData={this.props.getAccountData}
                                       getAllDeclarationsData={this.props.getAllDeclarationsData}
                                       getDeclarationStructureData={this.props.getDeclarationStructureData}
@@ -29,7 +30,9 @@ class PageContainer extends Component {
                                       getGroupsListSummary={this.props.getGroupsListSummary}
                                       getStudentProgress={this.props.getStudentProgress}
                                       logAsSupervisor={this.props.logAsSupervisor}
-                                      updateDeclaration={this.props.updateDeclaration}  />
+                                      updateDeclaration={this.props.updateDeclaration}
+                                      setCommentData={this.props.setCommentData}
+                                      applyComment={this.props.applyComment}  />
                 </div>
             </div>
         );
@@ -41,7 +44,8 @@ const mapStateToProps = state => {
         account: state.account,
         declarations: state.declarations,
         groups: state.groups,
-        student: state.student
+        student: state.student,
+        comment: state.comment
     };
 };
 
@@ -57,7 +61,9 @@ const mapDispatchToProps = dispatch => {
         getStudentProgress: Actions.getStudentProgress.withDispatch(dispatch),
         logAsSupervisor: Actions.logAsSupervisor.withDispatch(dispatch),
         logOut: Actions.logOut.withDispatch(dispatch),
-        updateDeclaration: Actions.updateDeclaration.withDispatch(dispatch)
+        updateDeclaration: Actions.updateDeclaration.withDispatch(dispatch),
+        setCommentData: Actions.setCommentData.withDispatch(dispatch),
+        applyComment: Actions.applyComment.withDispatch(dispatch)
     }
 };
 

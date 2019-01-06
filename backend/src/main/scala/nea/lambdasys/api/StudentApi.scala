@@ -2,7 +2,8 @@ package nea.lambdasys.api
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.{Directives, Route}
-import nea.lambdasys.api.model.{DeclarationStructure, StudentOverallProgress}
+import nea.lambdasys.api.model.{Comment, DeclarationStructure, StudentOverallProgress}
+import nea.lambdasys.core.domain.{Assignment, Exercise}
 import nea.lambdasys.core.{DeclarationManager, StudentManager}
 import spray.json.DefaultJsonProtocol
 
@@ -20,8 +21,11 @@ class StudentApi(students: StudentManager,
     pathPrefix(Segment) { studentIndex =>
       concat(
         declarationApi.route(studentIndex),
-        get {
+        (get & pathEnd) {
           complete(getStudentOverallProgress(studentIndex))
+        },
+        (post & path(Segment / "comment") & entity(as[Comment])) { (index, comment) =>
+          onComplete(applyComment(index, comment))(_ => complete(""))
         }
       )
     }
@@ -29,17 +33,34 @@ class StudentApi(students: StudentManager,
 
   def getStudentOverallProgress(studentId: String): Future[StudentOverallProgress] = async {
     val student = await(students.getStudentByIndex(studentId)).get
-    val declarationStructures = await(declarations.getDeclarations(studentId))
+    val assignments = await(declarations.getDeclarations(studentId))
       .flatMap(declaration => declaration.assignments)
       .sortBy(_.ordinalNumber)
-      .map(declarationApi.makeAssignmentNode)
+
+    val assignmentsProgress = assignments.map(calculateAssignmentProgress)
 
     StudentOverallProgress(studentId,
       s"${student.name} ${student.surname}",
       "bad",
-      64,
-      Seq(95, 67, 30, 0, 13),
-      DeclarationStructure(declarationStructures: _*)
+      math.round(assignmentsProgress.sum / assignments.size * 100).toInt,
+      assignmentsProgress.map(progress => Math.round(progress * 100).toInt),
+      DeclarationStructure(assignments.map(declarationApi.makeAssignmentNode): _*)
     )
+  }
+
+  def calculateAssignmentProgress(assignment: Assignment): Double = {
+    def countLeaves(exercise: Exercise, condition: Exercise => Boolean): Int = {
+      exercise.children match {
+        case Seq() => if (condition(exercise)) 1 else 0
+        case _ => exercise.children.map(countLeaves(_, condition)).sum
+      }
+    }
+
+    assignment.exercises.map(exercise => countLeaves(exercise, _.isDeclared)).sum /
+    assignment.exercises.map(exercise => countLeaves(exercise, _ => true)).sum.toDouble
+  }
+
+  def applyComment(index: String, comment: Comment): Future[Unit] = {
+    ???
   }
 }

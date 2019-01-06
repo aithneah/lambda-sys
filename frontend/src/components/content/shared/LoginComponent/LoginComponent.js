@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Input, message, Button} from 'antd';
+import {Input, message} from 'antd';
 import './LoginComponent.css';
 import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
 import CircleComponent from '../../../shared/CircleContainer/CircleContainer';

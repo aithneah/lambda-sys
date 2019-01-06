@@ -16,14 +16,14 @@ class HttpService(config: HttpServiceConfig)
                  (declarations: DeclarationManager,
                   groups: GroupManager,
                   students: StudentManager,
-                  classesManager: ClassesManager)
+                  classes: ClassesManager)
                  (implicit system: ActorSystem,
                   materializer: Materializer,
                   ec: ExecutionContext) extends Directives with CorsDirectives {
 
   private val accountApi = new AccountApi(students, groups)
-  private val declarationApi = new DeclarationApi(declarations)
-  private val groupApi = new GroupApi(students, groups, classesManager, declarations, declarationApi)
+  private val declarationApi = new DeclarationApi(declarations, classes)
+  private val groupApi = new GroupApi(students, groups, classes, declarations, declarationApi)
   private val studentApi = new StudentApi(students, declarations, declarationApi)
 
   def requestLog(request: HttpRequest): LogEntry =

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TopBarComponent from './TopBarComponent/TopBarComponent';
 import BottomBarComponent from './BottomBarComponent/BottomBarComponent';
 import './HeaderContainer.css';
-import ContentContainer from "../content/ContentContainer";
 
 class HeaderContainer extends Component {
     render() {

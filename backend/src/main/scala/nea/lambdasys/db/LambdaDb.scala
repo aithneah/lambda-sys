@@ -24,7 +24,8 @@ class LambdaDb(config: Config) {
       ClassesAssignments.schema ++
       Exercises.schema ++
       Declarations.schema ++
-      DeclaredExercises.schema
+      DeclaredExercises.schema ++
+      Comments.schema
 
     db.run(schema.drop.asTry >> schema.create)
   }

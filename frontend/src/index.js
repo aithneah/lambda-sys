@@ -13,6 +13,7 @@ import groupsReducer from "./store/reducers/groupsReducer";
 import studentsReducer from "./store/reducers/studentsReducer";
 import {connectRouter, routerMiddleware, ConnectedRouter} from 'connected-react-router';
 import {createBrowserHistory} from 'history';
+import commentReducer from "./store/reducers/commentReducer";
 
 const history = createBrowserHistory();
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
     account: accountReducer,
     declarations: declarationsReducer,
     groups: groupsReducer,
-    student: studentsReducer
+    student: studentsReducer,
+    comment: commentReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

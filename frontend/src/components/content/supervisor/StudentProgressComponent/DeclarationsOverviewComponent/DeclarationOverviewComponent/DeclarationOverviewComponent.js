@@ -16,7 +16,7 @@ const DeclarationOverviewComponent = (props) => {
         <div className="declarationOverviewExerciseTiles">
             {props.exercises && props.exercises
                 .map(exercise =>
-                    <div className="declarationOverviewExercise">
+                    <div className="declarationOverviewExercise" key={exercise.id}>
                         <ExerciseTileComponent type={"exercise-" + exercise.isDeclared}
                                                tick={exercise.isChecked}
                                                popover={exercise.isChecked}

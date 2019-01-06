@@ -3,6 +3,7 @@ import './GroupsComponent.scss';
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
 import {withRouter} from "react-router-dom";
+import {Icon} from "antd";
 
 class GroupsComponent extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class GroupsComponent extends Component {
                 <ButtonComponent title="Dodaj nowego studenta" type="buttonGradient" fontsize="2vh" />
                 <ButtonComponent title="Dodaj nową grupę" type="buttonGradient" fontsize="2vh" />
             </>}>
-            <table className="groupsComponentTable">
+            {this.state.isLoading ? <div className="declarationsComponentLoading"><Icon type="loading" /></div> : <table className="groupsComponentTable">
                 <tbody>
                 <tr className="groupsComponentTableHeader">
                     <th>Lp.</th>
@@ -60,7 +61,7 @@ class GroupsComponent extends Component {
                     </tr>
                 })}
                 </tbody>
-            </table>
+            </table>}
         </RectangularContainer>;
     }
 }

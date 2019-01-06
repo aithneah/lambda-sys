@@ -72,7 +72,7 @@ object DbGenerator {
     generateUniqueIndices().map(index => generateRandomStudent(index, availableGroups))
 
   private def generateClasses(group: Group): Seq[Classes] =
-    Stream.iterate(LocalDate.of(2018, 10, 1))(date => date.plusDays(1))
+    Stream.iterate(LocalDate.of(2018, 11, 15))(date => date.plusDays(1))
       .takeWhile(date => date.isBefore(LocalDate.of(2019, 2, 1)))
       .filter(date => date.getDayOfWeek == group.dayOfWeek)
       .filter(date => date.get(WeekFields.ISO.weekOfWeekBasedYear()) % 2 == group.weekParity.toInt)
@@ -92,13 +92,13 @@ object DbGenerator {
 
   private def generateRandomExercises(assignments: Seq[Assignment]): Seq[Exercise] = for {
     assignment <- assignments
-    exerciseOrdinalNumber <- 1 to 3 + Random.nextInt(3)
+    exerciseOrdinalNumber <- 1 to 3 + Random.nextInt(7)
   } yield Exercise(None, s"Zadanie $exerciseOrdinalNumber", exerciseOrdinalNumber, ExerciseType.Exercise,
     None, None, assignment.id.get)
 
   private def generateRandomSubpoints(exercises: Seq[Exercise]): Seq[Exercise] = for {
     exercise <- exercises
-    subpointOrdinalNumber <- 1 to (1 + Random.nextInt(4))
+    subpointOrdinalNumber <- 1 to (2 + Random.nextInt(3))
     subpointLetter = ('A' + subpointOrdinalNumber - 1).toChar
   } yield Exercise(None, s"Podpunkt $subpointLetter", subpointOrdinalNumber, ExerciseType.Subpoint,
     None, Some(exercise.id.get), exercise.assignmentId)

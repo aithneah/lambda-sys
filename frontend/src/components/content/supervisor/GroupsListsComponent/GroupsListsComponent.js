@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./GroupsListsComponent.scss";
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import {withRouter} from "react-router-dom";
+import {Icon} from "antd";
 
 class GroupsListsComponent extends Component {
     constructor(props) {
@@ -38,7 +39,8 @@ class GroupsListsComponent extends Component {
 
         return <RectangularContainer title="Grupa Poniedziałek TP 11:15"
                                      icon="team">
-            <table className="groupsListsTable">
+            {this.state.isLoading ? <div className="declarationsComponentLoading"><Icon type="loading" /></div> :
+                <table className="groupsListsTable">
                 <tbody>
                 <tr className="groupsListsTableHeader">
                     <th>Lp.</th>
@@ -59,7 +61,7 @@ class GroupsListsComponent extends Component {
                         </tr>
                     })}
                 </tbody>
-            </table>
+            </table>}
         </RectangularContainer>;
     }
 }

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./GroupsStudentsComponent.scss";
 import RectangularContainer from "../../../shared/RectangularContainer/RectangularContainer";
 import ButtonComponent from "../../../shared/ButtonComponent/ButtonComponent";
+import {Icon} from "antd";
 
 class GroupsStudentsComponent extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class GroupsStudentsComponent extends Component {
     render() {
         return <RectangularContainer title={"Edytuj grupę - " + this.props.group.classesDate}
                                      icon="team">
-            <table className="groupsStudentsTable">
+            {this.state.isLoading ? <div className="declarationsComponentLoading"><Icon type="loading" /></div> : <table className="groupsStudentsTable">
                 <tbody>
                 <tr className="groupsStudentsTableHeader">
                     <th>Numer indeksu</th>
@@ -49,7 +50,7 @@ class GroupsStudentsComponent extends Component {
                         </td>
                     </tr>)}
                 </tbody>
-            </table>
+            </table>}
         </RectangularContainer>;
     }
 }

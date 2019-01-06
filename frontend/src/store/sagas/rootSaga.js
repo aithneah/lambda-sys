@@ -10,6 +10,7 @@ import {getGroupsListSummary} from "./getGroupsListSummarySaga";
 import {getStudentProgress} from "./getStudentProgressSaga";
 import {logOut} from "./logOutSaga";
 import {updateDeclaration} from "./updateDeclarationSaga";
+import {applyComment} from "./applyCommentSaga";
 
 export function* rootSaga() {
     yield takeEvery(Actions.getAccountData.Type, getAccountData);
@@ -21,5 +22,6 @@ export function* rootSaga() {
     yield takeEvery(Actions.getGroupsListSummary.Type, getGroupsListSummary);
     yield takeEvery(Actions.getStudentProgress.Type, getStudentProgress);
     yield takeEvery(Actions.logOut.Type, logOut);
-    yield takeEvery(Actions.updateDeclaration.Type, updateDeclaration)
+    yield takeEvery(Actions.updateDeclaration.Type, updateDeclaration);
+    yield takeEvery(Actions.applyComment.Type, applyComment);
 }

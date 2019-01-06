@@ -41,7 +41,7 @@ class DeclarationsComponent extends Component {
 
         return <RectangularContainer
             title="Deklaracje">
-            {this.state.isLoading ? <div className="declarationsComponentLoading"><Icon type="loading" /></div> :
+            {this.state.isLoading ? <div className="declarationsComponentLoading"><Icon type="loading"/></div> :
                 <table className="declarationsTable">
                     <tbody>
                     <tr className="declarationsTableHeader">
@@ -52,18 +52,26 @@ class DeclarationsComponent extends Component {
                     </tr>
                     {this.props.declarations
                         .map((declaration, i) => {
+                                const classesDate = new Date(declaration.classesDate);
+
                                 return <tr key={i}>
                                     <td>{i + 1}</td>
                                     <td>{declaration.lists.join(', ')}</td>
-                                    <td>{new Date(declaration.classesDate).toLocaleString(locale, this.dateOptions)}</td>
+                                    <td>{classesDate.toLocaleString(locale, this.dateOptions)}</td>
                                     <td>{declaration.completionDate ?
                                         new Date(declaration.completionDate).toLocaleString(locale, this.dateOptions) : "-"}</td>
                                     <td className="declarationsTableTDButtons">
-                                        <ButtonComponent
-                                            title={"Wypełnij"}
-                                            type={"buttonGradient"}
-                                            onClick={() => this.props.history.push(`/declare/${declaration.classesId}`)}
-                                            fontsize="2vh"/></td>
+                                        {new Date() > classesDate ?
+                                            <ButtonComponent title={declaration.completionDate ? "Wypełniono" : "Nie wypełniono"}
+                                                             type={"buttonGray"}
+                                                             fontsize="2vh"/>
+                                            :
+                                            <ButtonComponent
+                                                title={declaration.completionDate ? "Edytuj" : "Wypełnij"}
+                                                type={"buttonGradient"}
+                                                onClick={() => this.props.history.push(`/declare/${declaration.classesId}`)}
+                                                fontsize="2vh"/>
+                                        }</td>
                                 </tr>;
                             }
                         )}

@@ -6,6 +6,7 @@ import ExerciseTileComponent from "../../../shared/ExerciseTileComponent/Exercis
 import BadgeComponent from "../../../shared/BadgeComponent/BadgeComponent";
 import CircleButtonComponent from "../../../shared/CircleButtonComponent/CircleButtonComponent";
 import {withRouter} from "react-router-dom";
+import {Icon} from "antd";
 
 class ListProgressComponent extends Component {
     constructor(props) {
@@ -41,7 +42,6 @@ class ListProgressComponent extends Component {
     };
 
     render() {
-        console.log(this.props.group);
         let currentListName = this.props.group.lists
             .find(list => list.id === this.props.listId).name;
 
@@ -52,7 +52,8 @@ class ListProgressComponent extends Component {
                                          <ButtonComponent title="Powrót" type="buttonGradient" fontsize="2vh"/>
                                      </>}
         >
-            <table className="listProgressTable">
+            {this.state.isLoading ? <div className="declarationsComponentLoading"><Icon type="loading" /></div> :
+                <table className="listProgressTable">
                 <tbody>
                 <tr className="listProgressTableHead">
                     <th>Numer indeksu</th>
@@ -90,7 +91,7 @@ class ListProgressComponent extends Component {
                         </tr>;
                     })}
                 </tbody>
-            </table>
+            </table>}
         </RectangularContainer>;
     }
 }

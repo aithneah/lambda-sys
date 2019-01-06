@@ -61,7 +61,11 @@ const Actions = makeActions({
 
     clearStudents: Empty,
 
-    updateDeclaration: (classesId, declarationStructure) => ({ classesId, declarationStructure })
+    updateDeclaration: (classesId, declarationStructure) => ({ classesId, declarationStructure }),
+
+    setCommentData: (list, exercise, subpoint, lang) => ({ list, exercise, subpoint, lang }),
+
+    applyComment: (exerciseId, commentContent, note) => ({ exerciseId, commentContent, note })
 });
 
 export default Actions;

@@ -4,7 +4,7 @@ import DeclarationOverviewComponent from "./DeclarationOverviewComponent/Declara
 
 const DeclarationsOverviewComponent = (props) =>
     <div className="declarationsOverviewContainer">
-        {props.lists && props.lists.map(list => <DeclarationOverviewComponent exercises={list.children} listName={list.name}/>)}
+        {props.lists && props.lists.map(list => <DeclarationOverviewComponent key={list.id} exercises={list.children} listName={list.name}/>)}
     </div>;
 
 export default DeclarationsOverviewComponent;

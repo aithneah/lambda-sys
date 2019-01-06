@@ -25,8 +25,6 @@ class ContentContainer extends React.Component {
                 <Route exact path="/login" render={() =>
                     <LoginComponent getAccountData={this.props.getAccountData}
                                     logAsSupervisor={this.props.logAsSupervisor}/>}/>
-                <Route exact path="/commentOptions" component={CommentOptionsComponent}/>
-                <Route exact path="/comment" component={CommentComponent}/>
                 <Route exact path="/declarations"
                        render={() => <DeclarationsComponent declarations={this.props.declarations}
                                                             getAllDeclarationsData={this.props.getAllDeclarationsData}/>
@@ -37,7 +35,7 @@ class ContentContainer extends React.Component {
                                               structure={this.props.declarations
                                                   .find(d => d.classesId === +props.match.params.classesId).structure}
                                               getDeclarationStructureData={this.props.getDeclarationStructureData}
-                                              updateDeclaration={this.props.updateDeclaration}  />)}/>
+                                              updateDeclaration={this.props.updateDeclaration}/>)}/>
                 <Route exact path="/settings" render={() => <SettingsComponent account={this.props.account}/>}/>
                 <Route exact path="/groups" render={() =>
                     <GroupsComponent groups={this.props.groups}
@@ -62,7 +60,14 @@ class ContentContainer extends React.Component {
                     <StudentProgressComponent getStudentProgress={this.props.getStudentProgress}
                                               studentId={props.match.params.studentId}
                                               student={this.props.student}/>}/>
-                <Route exact path="/lists" render={() => <ListsComponent/>} />
+                <Route exact path="/students/:studentId/commentOptions" render={() =>
+                    <CommentOptionsComponent student={this.props.student}
+                                             setCommentData={this.props.setCommentData}/>}/>
+                <Route exact path="/students/:studentId/comment"
+                       render={() => <CommentComponent student={this.props.student}
+                                                       comment={this.props.comment}
+                                                       applyComment={this.props.applyComment} />}/>
+                <Route exact path="/lists" render={() => <ListsComponent/>}/>
                 <Route exact path="/lists/:listId" render={(props) =>
                     <ExercisesComponent listId={props.match.params.listId}/>}/>
             </Switch>

@@ -30,4 +30,17 @@ class ClassesManager(db: LambdaDb) {
       )
     }
   }
+
+  def getClassesById(classesId: Int)
+                    (implicit ec: ExecutionContext): Future[Option[Classes]] = async {
+    val classes = await(db.getClassesById(classesId))
+    classes.map(c => Classes(
+      id = c.id.get,
+      date = c.date,
+      time = c.time,
+      duration = c.duration,
+      groupId = c.groupId,
+      assignments = Seq()
+    ))
+  }
 }
