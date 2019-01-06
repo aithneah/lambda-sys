@@ -24,7 +24,7 @@ class HttpService(config: HttpServiceConfig)
 
   private val accountApi = new AccountApi(students, groups)
   private val declarationApi = new DeclarationApi(declarations, classes)
-  private val groupApi = new GroupApi(students, groups, classes, declarations, declarationApi)
+  private val groupApi = new GroupApi(students, groups, classes, declarations, comments, declarationApi)
   private val studentApi = new StudentApi(students, declarations, comments, declarationApi)
 
   def requestLog(request: HttpRequest): LogEntry =

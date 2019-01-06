@@ -6,4 +6,6 @@ case class Exercise(id: Int,
                     `type`: ExerciseType,
                     isDeclared: Boolean,
                     contents: Option[String],
-                    children: Seq[Exercise])
+                    children: Seq[Exercise],
+                    comment: Option[String] = None,
+                    note: Option[String] = None)

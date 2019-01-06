@@ -59,7 +59,8 @@ class LambdaDb(config: Config) {
   }
 
   def getDeclarationByStudentAndClasses(studentIndex: String, classesId: Int)
-                                       (implicit ec: ExecutionContext): Future[(Option[Declaration], Seq[(Assignment, Seq[(Exercise, Option[DeclaredExercise])])])] =
+                                       (implicit ec: ExecutionContext)
+  : Future[(Option[Declaration], Seq[(Assignment, Seq[(Exercise, Option[DeclaredExercise], Option[Comment])])])] =
     async {
       val (declaration, assignmentExercisePairs) = await(db.run {
         for {
@@ -67,15 +68,16 @@ class LambdaDb(config: Config) {
             .result
             .headOption
           declarationId = declaration.flatMap(_.id).getOrElse(-1)
-          declaredExs = DeclaredExercises filter (_.declarationId === declarationId)
+          declaredExsWithComments = DeclaredExercises filter (_.declarationId === declarationId) joinLeft
+            Comments on (_.id === _.declaredExerciseId)
           assignmentDeclaredExercisePairs <- (for {
             classesAssignment <- ClassesAssignments
             if classesAssignment.classesId === classesId
             assignment <- Assignments
             if classesAssignment.assignmentId === assignment.id
-            (exercise, maybeDeclaredExercise) <- Exercises joinLeft declaredExs on (_.id === _.exerciseId)
+            (exercise, maybeDeclaredExerciseWithComment) <- Exercises joinLeft declaredExsWithComments on (_.id === _._1.exerciseId)
             if exercise.assignmentId === assignment.id
-          } yield (assignment, (exercise, maybeDeclaredExercise))).result
+          } yield (assignment, (exercise, maybeDeclaredExerciseWithComment.map(_._1), maybeDeclaredExerciseWithComment.flatMap(_._2)))).result
         } yield (declaration, assignmentDeclaredExercisePairs)
       })
 
@@ -107,6 +109,17 @@ class LambdaDb(config: Config) {
         classes <- Classess
         if classes.groupId === group.id
       } yield classes).result
+    }
+
+  def getStudentIndexesByClasses(classesId: Int): Future[Seq[String]] =
+    db.run {
+      (for {
+        classes <- Classess
+        if classes.id === classesId
+        group <- classes.group
+        student <- Students
+        if student.groupId === group.id
+      } yield student.index).result
     }
 
   def getGroupsWithStudentIndexes()(implicit ec: ExecutionContext): Future[Seq[(Group, Seq[String])]] = async {
@@ -157,5 +170,30 @@ class LambdaDb(config: Config) {
   def updateOrCreateComment(comment: Comment): Future[Int] =
     db.run {
       Comments.insertOrUpdate(comment)
+    }
+
+  def countCommentsByStudent(studentIndex: String): Future[Int] =
+    db.run {
+      (for {
+        comment <- Comments
+        declaredExercise <- DeclaredExercises
+        if comment.declaredExerciseId === declaredExercise.id
+        declaration <- Declarations
+        if declaration.id === declaredExercise.declarationId
+        if declaration.studentIndex === studentIndex
+      } yield comment).length.result
+    }
+
+  def countDeclarationsByGroupAndAssignment(groupId: String, assignmentId: Int): Future[Int] =
+    db.run {
+      (for {
+        declaredExercise <- DeclaredExercises
+        exercise <- Exercises
+        if declaredExercise.exerciseId === exercise.id && exercise.assignmentId === assignmentId
+        declaration <- Declarations
+        if declaredExercise.declarationId === declaration.id
+        classes <- Classess
+        if declaration.classesId === classes.id && classes.groupId === groupId
+      } yield declaration.id).distinct.length.result
     }
 }

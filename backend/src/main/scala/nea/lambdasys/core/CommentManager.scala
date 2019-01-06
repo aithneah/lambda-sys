@@ -24,4 +24,7 @@ class CommentManager(db: LambdaDb) {
         throw new IllegalArgumentException(s"The exercise [${comment.exerciseId}] was not declared by [$studentIndex].")
     }
   }
+
+  def countCommentsByStudent(studentIndex: String): Future[Int] =
+    db.countCommentsByStudent(studentIndex)
 }

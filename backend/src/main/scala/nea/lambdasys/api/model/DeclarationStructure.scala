@@ -13,7 +13,7 @@ object DeclarationStructure {
                   name: String,
                   `type`: String,
                   isDeclared: DeclarationDegree,
-                  isChecked: Option[Boolean],
+                  isChecked: Boolean,
                   comment: Option[String],
                   note: Option[String],
                   children: Node*) {
@@ -22,7 +22,7 @@ object DeclarationStructure {
              name: String = name,
              `type`: String = `type`,
              isDeclared: DeclarationDegree = isDeclared,
-             isChecked: Option[Boolean] = isChecked,
+             isChecked: Boolean = isChecked,
              children: Seq[Node] = children): Node =
       Node(id, name, `type`, isDeclared, isChecked, comment, note, children: _*)
   }
@@ -32,7 +32,7 @@ object DeclarationStructure {
     def apply(name: String,
               `type`: String,
               children: Node*): Node =
-      new Node(0, name, `type`, DeclarationDegree.Not, None, Some(""), None, children: _*)
+      new Node(0, name, `type`, DeclarationDegree.Not, false, None, None, children: _*)
 
     def apply(id: Int,
               name: String,
@@ -40,14 +40,14 @@ object DeclarationStructure {
               isDeclared: DeclarationDegree,
               isChecked: Option[Boolean],
               children: Node*): Node =
-      new Node(id, name, `type`, isDeclared, isChecked, Some(""), None, children: _*)
+      new Node(id, name, `type`, isDeclared, false, None, None, children: _*)
 
     implicit val format: RootJsonFormat[Node] = rootFormat(lazyFormat(jsonFormat(
       (i: Int,
        n: String,
        t: String,
        d: DeclarationDegree,
-       c: Option[Boolean],
+       c: Boolean,
        nt: Option[String],
        cm: Option[String],
        ch: Seq[Node]) => Node(i, n, t, d, c, nt, cm, ch: _*),
@@ -56,8 +56,8 @@ object DeclarationStructure {
       "type",
       "isDeclared",
       "isChecked",
-      "note",
       "comment",
+      "note",
       "children")))
   }
 

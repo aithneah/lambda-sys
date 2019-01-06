@@ -61,13 +61,18 @@ class DeclarationApi(declarations: DeclarationManager,
       .map(_.isDeclared)
       .reduceOption(_ | _)
       .getOrElse(DeclarationDegree.fromBoolean(exercise.isDeclared))
+    val isChecked = children
+      .map(_.isChecked)
+      .foldLeft(exercise.note.isDefined)(_ | _)
 
     DeclarationNode(
       id = exercise.id,
       name = exercise.name,
       `type` = exercise.`type`.toString.toLowerCase,
       isDeclared = declarationDegree,
-      None,
+      isChecked,
+      comment = exercise.comment,
+      note = exercise.note,
       children: _*
     )
   }
