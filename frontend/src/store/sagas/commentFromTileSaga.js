@@ -9,14 +9,13 @@ export function* commentFromTile(action) {
     yield put(Actions.setStudentProgress(action.studentIndex, data));
 
     const student = yield select(selectors.student);
-    console.log(student);
+
     const listIndex = student.declarationStructure
         .structure.findIndex(list => list.name === action.listName);
 
     const exerciseIndex = student.declarationStructure
         .structure.find(list => list.name === action.listName)
         .children.findIndex(exercise => exercise.name === action.exerciseName);
-    console.log(listIndex, exerciseIndex);
 
     yield put(Actions.setCommentData(listIndex, exerciseIndex));
     yield put(push("/students/" + action.studentIndex + "/commentOptions"));
