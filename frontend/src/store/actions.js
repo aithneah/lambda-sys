@@ -1,3 +1,5 @@
+import {studentIndex} from "./sagas/selectors";
+
 const makeActions = actions => {
     Object.entries(actions)
         .forEach(([name, constructor]) => {
@@ -67,7 +69,11 @@ const Actions = makeActions({
 
     applyComment: (exerciseId, commentContent, note) => ({ exerciseId, commentContent, note }),
 
-    commentFromTile: (studentIndex, listName, exerciseName, groupId) => ({ studentIndex, listName, exerciseName, groupId })
+    commentFromTile: (studentIndex, listName, exerciseName, groupId) => ({ studentIndex, listName, exerciseName, groupId }),
+
+    deleteStudent: (studentIndex) => ({ studentIndex }),
+
+    deleteStudentFromStore: (studentIndex, groupId) => ({ studentIndex, groupId })
 });
 
 export default Actions;

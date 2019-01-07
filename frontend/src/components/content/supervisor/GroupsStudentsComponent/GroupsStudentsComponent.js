@@ -46,6 +46,7 @@ class GroupsStudentsComponent extends Component {
                                              fontsize="2vh"/>
                             <ButtonComponent title="Usuń z grupy"
                                              type="buttonRed"
+                                             onClick={() => this.props.deleteStudent(student.index)}
                                              fontsize="2vh"/>
                         </td>
                     </tr>)}

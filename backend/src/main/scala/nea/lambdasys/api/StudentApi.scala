@@ -27,6 +27,9 @@ class StudentApi(students: StudentManager,
         },
         (post & path("comment") & entity(as[Comment])) { comment =>
           onComplete(applyComment(studentIndex, comment))(_ => complete(""))
+        },
+        (delete & pathEnd) {
+          onComplete(students.deleteStudentByIndex(studentIndex))(_ => complete(""))
         }
       )
     }

@@ -47,6 +47,7 @@ class ContentContainer extends React.Component {
                 />
                 <Route exact path="/groups/:id/students" render={(props) =>
                     <GroupsStudentsComponent groupId={props.match.params.id}
+                                             deleteStudent={this.props.deleteStudent}
                                              getGroupsStudentsData={this.props.getGroupsStudentsData}
                                              group={this.props.groups.find(group => group.id === props.match.params.id)}/>}
                 />

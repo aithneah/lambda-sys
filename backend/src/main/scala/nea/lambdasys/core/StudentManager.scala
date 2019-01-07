@@ -29,4 +29,7 @@ class StudentManager(db: LambdaDb) {
       )
     }
   }
+
+  def deleteStudentByIndex(studentIndex: String)(implicit ec: ExecutionContext) =
+    db.deleteStudentByIndex(studentIndex)
 }

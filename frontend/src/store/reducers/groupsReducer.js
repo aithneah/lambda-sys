@@ -18,6 +18,13 @@ const groupsReducer = (state = initialState, action) => {
             return [...state
                 .map(group => group.id === action.groupId ?
                 {...group, summary: action.summary} : group)];
+        case Actions.deleteStudentFromStore.Type:
+            let groupToModify = {...state.find(group => group.id === action.groupId)};
+            let index = groupToModify.students.findIndex(student => student.index === action.studentIndex);
+            console.log(groupToModify);
+            groupToModify.students.splice(index, 1);
+            return [...state.map(group => group.id === action.groupId ?
+                groupToModify : group)]
         case Actions.clearGroups.Type:
             return initialState;
         default:

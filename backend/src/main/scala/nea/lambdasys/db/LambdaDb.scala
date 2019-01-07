@@ -208,4 +208,31 @@ class LambdaDb(config: Config) {
         if declaration.classesId === classes.id && classes.groupId === groupId
       } yield declaration.id).distinct.length.result
     }
+
+  def deleteStudentByIndex(studentIndex: String)(implicit ec: ExecutionContext): Future[Unit] = {
+    val commentsQuery = for {
+      comment <- Comments
+      declaredExercise <- DeclaredExercises
+      if comment.declaredExerciseId === declaredExercise.id
+      declaration <- Declarations
+      if declaration.id === declaredExercise.declarationId
+      if declaration.studentIndex === studentIndex
+    } yield comment.declaredExerciseId
+
+    val declaredExercisesQuery = for {
+      declaredExercise <- DeclaredExercises
+      declaration <- Declarations
+      if declaration.id === declaredExercise.declarationId
+      if declaration.studentIndex === studentIndex
+    } yield declaredExercise.id
+
+    db.run {
+      for {
+        _ <- (Comments filter (_.declaredExerciseId in commentsQuery)).delete
+        _ <- (DeclaredExercises filter (_.id in declaredExercisesQuery)).delete
+        _ <- (Declarations filter (_.studentIndex === studentIndex)).delete
+        _ <- (Students filter (_.index === studentIndex)).delete
+      } yield ()
+    }
+  }
 }

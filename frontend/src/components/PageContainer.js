@@ -33,7 +33,8 @@ class PageContainer extends Component {
                                       updateDeclaration={this.props.updateDeclaration}
                                       setCommentData={this.props.setCommentData}
                                       applyComment={this.props.applyComment}
-                                      commentFromTile={this.props.commentFromTile}  />
+                                      commentFromTile={this.props.commentFromTile}
+                                      deleteStudent={this.props.deleteStudent}  />
                 </div>
             </div>
         );
@@ -65,7 +66,8 @@ const mapDispatchToProps = dispatch => {
         updateDeclaration: Actions.updateDeclaration.withDispatch(dispatch),
         setCommentData: Actions.setCommentData.withDispatch(dispatch),
         applyComment: Actions.applyComment.withDispatch(dispatch),
-        commentFromTile: Actions.commentFromTile.withDispatch(dispatch)
+        commentFromTile: Actions.commentFromTile.withDispatch(dispatch),
+        deleteStudent: Actions.deleteStudent.withDispatch(dispatch)
     }
 };
 

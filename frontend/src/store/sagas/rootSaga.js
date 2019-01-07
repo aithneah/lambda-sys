@@ -12,6 +12,7 @@ import {logOut} from "./logOutSaga";
 import {updateDeclaration} from "./updateDeclarationSaga";
 import {applyComment} from "./applyCommentSaga";
 import {commentFromTile} from "./commentFromTileSaga";
+import {deleteStudent} from "./deleteStudentSaga";
 
 export function* rootSaga() {
     yield takeEvery(Actions.getAccountData.Type, getAccountData);
@@ -25,5 +26,6 @@ export function* rootSaga() {
     yield takeEvery(Actions.logOut.Type, logOut);
     yield takeEvery(Actions.updateDeclaration.Type, updateDeclaration);
     yield takeEvery(Actions.applyComment.Type, applyComment);
-    yield takeEvery(Actions.commentFromTile.Type, commentFromTile)
+    yield takeEvery(Actions.commentFromTile.Type, commentFromTile);
+    yield takeEvery(Actions.deleteStudent.Type, deleteStudent);
 }
