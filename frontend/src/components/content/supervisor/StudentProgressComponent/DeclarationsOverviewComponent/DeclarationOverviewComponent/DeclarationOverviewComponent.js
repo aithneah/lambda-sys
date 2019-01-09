@@ -5,7 +5,8 @@ import ExerciseTileComponent from "../../../../../shared/ExerciseTileComponent/E
 const DeclarationOverviewComponent = (props) => {
     let buildPartialData = (node, path) => {
         return node.note !== undefined ?
-            [...path, node.name].join(" / ") + ": " + node.note + (node.comment !== undefined ? (" - " + node.comment) : "") + "\n"
+            [...path, node.name].join(" / ") + ": " + (node.note === "positive" ? "pozytywny" : (node.note === "negative" ? "negatywny" : "neutralny"))
+            + (node.comment !== undefined ? (" - " + node.comment) : "") + "\n"
             + node.children.map((child) => buildPartialData(child, [...path, node.name]))
             : node.children.map((child) => buildPartialData(child, [...path, node.name]));
 
